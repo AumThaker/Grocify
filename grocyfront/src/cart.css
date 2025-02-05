@@ -1,0 +1,85 @@
+.cart{
+    display: block;
+    color: green;
+    font-family: 'MouldyCheese';
+}
+.top-section-cart{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.top-section-cart h1{
+    margin-left: 20px;
+    letter-spacing: 4px;
+}
+.BuyAll{
+    width: 100px;
+    max-width: 100px;
+    height: 35px;
+    border-radius: 10px;
+    border-style: none;
+    font-family: 'MouldyCheese';
+    background-color: green;
+    color: white;
+    margin-right: 40px;
+    margin-top: 20px;
+}
+.cart-items{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    max-width: 1500px;
+    row-gap: 40px;
+    justify-items: center;
+    align-items: start;
+}
+.itemBox{
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    max-width: 250px;
+    height: 350px;
+    background-color: green;
+    border-radius: 10px;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 1px 1px 1px 1px black;
+}
+.itemBox img{
+    display: block;
+    width: 250px;
+    max-width: 250px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0px 0px;
+}
+#cartItemName{
+    color: white;
+    font-family: 'Queensides';
+    text-align: center;
+    margin-top: 5px;
+}
+#cartItemPrice{
+    color: white;
+    font-family: 'Queensides';
+    text-align: center;
+    margin-top: 5px;
+}
+.BuyThis{
+    width: 150px;
+    max-width: 150px;
+    height: 30px;
+    border-radius: 10px;
+    border-style: none;
+    font-family: 'MouldyCheese';
+}
+.login-first{
+    position: absolute;
+    font-family: 'NightShift';
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: green;
+    font-size: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}

@@ -1,0 +1,161 @@
+.navigation-wrapper{
+    display: flex;
+    color: green;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: 100;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+.navigator{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    text-transform: uppercase;
+    font-family: 'MouldyCheese';
+    cursor: pointer;
+    padding-left: 20px;
+}
+.nav-login-btn{
+    display: block;
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  border-style: none;
+  background-color: green;
+  color: white;
+  font-family: 'Queensides';
+  font-weight: bolder;
+  margin-top: -10px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+.vegetables{
+    display: block;
+    color: green;
+    font-family: 'MouldyCheese';
+    letter-spacing: 4px;
+}
+.vegetables h1{
+    margin-left: 20px;
+}
+#loader{
+    display: block;
+    width: 50px;
+    height:50px;
+    animation-name: loader;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    margin-right: 20px;
+}
+@keyframes loader {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg)
+    }
+}
+.veggies{
+    display: flex;
+    flex-direction: row;
+    width: 97vw;
+    overflow-x: scroll;
+    position: absolute;
+    gap: 20px;
+    left: 20px;
+    scrollbar-width: thin;
+    scrollbar-color: green transparent;
+}
+.vegBox{
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 300px;
+    background-color: green;
+    border-radius: 10px;
+    align-items: center;
+}
+.vegBox img{
+    display: block;
+    width: 250px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0px 0px;
+}
+#vegName{
+    color: white;
+    font-family: 'Queensides';
+    text-align: center;
+    margin-top: 5px;
+}
+#vegPrice{
+    color: white;
+    font-family: 'Queensides';
+    text-align: center;
+    margin-top: 5px;
+}
+.AddToCart{
+    width: 150px;
+    height: 30px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border-style: none;
+    font-family: 'MouldyCheese';
+}
+.notification{
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(250, 0, 0);
+    position: absolute;
+    bottom: 2%;
+    right: 1%;
+    transform: translate(0%,0%);
+    gap: 20px;
+    max-width: 250px;
+    width: 250px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 10px;
+    animation-name: RightToLeft;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+.notification span{
+    font-size: 20px;
+    font-family: "Queensides";
+}
+@keyframes RightToLeft {
+    0%{
+        right: -5%;
+        opacity: 0;
+    }
+    100%{
+        right: 1%;
+        opacity: 1;
+    }
+}
+.nav-LogOutBtn{
+    display: block;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    border-style: none;
+    background-color: green;
+    color: white;
+    font-family: 'Queensides';
+    font-weight: bolder;
+    margin-top: -10px;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+  .nav-logout-profile{
+    display: flex;
+    flex-direction: row;
+  }
+  .nav-bi-person-circle{
+    padding-top: -30px;
+  }

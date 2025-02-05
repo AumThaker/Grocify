@@ -1,0 +1,71 @@
+import "./loginReg.css";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+export default function Login() {
+  return <LoginContainer />;
+}
+function LoginContainer() {
+  let [error, setError] = useState(null);
+  let [data, setData] = useState(null);
+  async function LoginBackend(e) {
+    try {
+      e.preventDefault();
+      let form = e.target;
+      let formData = new FormData(form);
+      let formObject = Object.fromEntries(formData.entries());
+      const response = await fetch("http://localhost:3000/user/loginUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formObject),
+        credentials: "include",
+      });
+      if (!response.ok) {
+        const error = await response.json();
+        setError(error.message);
+        return;
+      }
+      const result = await response.json();
+      setData(result);
+      console.log("Response from server:", result);
+      setError(null);
+    } catch (error) {
+      setError("There was an issue with the request.");
+    }
+  }
+  return data ? (
+    <div className="redirect-login">
+      <h1>Logged In Successfully</h1>
+      <motion.div className="redirectBtn-wrapper">
+        <Link to={"/"} style={{ textDecoration: "none" }}>
+          <motion.button whileTap={{ scale: 0.85 }} className="redirctBtn">
+            Go To Home Page
+          </motion.button>
+        </Link>
+      </motion.div>
+    </div>
+  ) : (
+    <div className="login-container">
+      <div className="login-form">
+        <h1>Login Now !!</h1>
+        <form onSubmit={LoginBackend}>
+          <div className="form">
+            <label htmlFor="userOremail">Email Id</label>
+            <input type="email" id="userOremail" name="email"></input>
+          </div>
+          <div className="form">
+            <label htmlFor="login-password">Password</label>
+            <input type="password" id="login-password" name="password"></input>
+          </div>
+          <button type="submit">Log In</button>
+          <span style={{ color: "red" }}>{error}</span>
+        </form>
+      </div>
+      <div className="login-image">
+        <img src="loginRegPFP.jpg" alt="login-image"></img>
+      </div>
+    </div>
+  );
+}
