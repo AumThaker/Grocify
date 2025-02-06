@@ -22,7 +22,9 @@ app.use("/api",apiRoutes);
 import cartRoutes from "./src/routes/cartroute.js"
 app.use("/cart",cartRoutes);
 import orderRoutes from "./src/routes/orderroute.js"
-app.use("/cart",orderRoutes);
+import { addWarehouse } from './src/controllers/warehousecontrol.js'
+app.use("/orders",orderRoutes);
+app.use("/addWarehouse",addWarehouse)
 const startServer = async () => {
     try {
         await connectDB();

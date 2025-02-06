@@ -97,6 +97,7 @@ function Nav({ loginStat, logout }) {
 function CartItems({ loginStat }) {
   let [cart, setCart] = useState(null);
   let [error, setError] = useState(null);
+
   useEffect(() => {
     (async function cartItems() {
       const response = await fetch("http://localhost:3000/cart/cartItems", {
@@ -109,6 +110,7 @@ function CartItems({ loginStat }) {
       }
       if (response.ok) {
         const result = await response.json();
+        console.log(result)
         setCart(result.cart);
       }
     })();
@@ -122,7 +124,7 @@ function CartItems({ loginStat }) {
         e.target.value = stock;
         value = e.target.value
     }
-    const response = await fetch(`http://localhost:3000/cart/changeQuantity?productId=${cart[id]._id}&quantity=${value}`, {
+    const response = await fetch(`http://localhost:3000/cart/changeQuantity?productId=${cart[id][0]._id}&quantity=${value}`, {
         method: "POST",
         credentials: "include",
       });
@@ -132,8 +134,16 @@ function CartItems({ loginStat }) {
       }
       if (response.ok) {
         const result = await response.json();
+        let updatedCart = [...cart]
+        updatedCart[id][1] = value
+        setCart(updatedCart)
       }
   }
+
+  async function singleItemOrder(id){
+    console.log(cart[id][0],cart[id][1])
+  }
+
   return loginStat ? (
     <div className="cart">
       <div className="top-section-cart">
@@ -152,10 +162,10 @@ function CartItems({ loginStat }) {
           cart.map((item, id) => {
             return (
               <div className="itemBox">
-                <img src={item.imageUrl} alt="cartImage" id="cartImage"></img>
-                <span id="cartItemName">{item.name}</span>
+                <img src={item[0].imageUrl} alt="cartImage" id="cartImage"></img>
+                <span id="cartItemName">{item[0].name}</span>
                 <span id="cartItemPrice">
-                  Rs{item.price} / {item.unit}
+                  Rs{item[0].price} / {item[0].unit}
                 </span>
                 <div
                   className="quantity-item"
@@ -171,14 +181,15 @@ function CartItems({ loginStat }) {
                     type="number"
                     placeholder="1"
                     min={1}
-                    max={item.stock}
+                    max={item[0].stock}
                     id="Quantity"
-                    defaultValue={1}
-                    onInput={(e)=>{handleQuantityInput(item.stock,id,e)}}
+                    defaultValue={item[1]}
+                    name="quantity"
+                    onInput={(e)=>{handleQuantityInput(item[0].stock,id,e)}}
                   ></input>
                 </div>
                 <motion.div>
-                  <motion.button whileTap={{ scale: 0.85 }} className="BuyThis">
+                  <motion.button whileTap={{ scale: 0.85 }} className="BuyThis" onClick={()=>singleItemOrder(id)}>
                     Buy This
                   </motion.button>
                 </motion.div>

@@ -28,10 +28,10 @@ const cartItems = async (req, res) => {
     const cartItems = await Promise.all(
       products.map(async (product) => {
         const item = await GrocyAPI.findById(product.productId);
-        return item;
+        return [item,product.quantity];
       })
     );
-    return res.status(200).json({ message: "Cart Fetched", cart: cartItems });
+    return res.status(200).json({ message: "Cart Fetched", cart: cartItems  });
   } catch (error) {
     return res.status(500).json({ message: "Error fetching cart items" });
   }
