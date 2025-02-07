@@ -101,6 +101,7 @@ function CartItems({ loginStat }) {
   let [paymentDate,setPaymentDate] = useState(null)
   let [paymentAmount,setPaymentAmount] = useState(null)
   let [orderData,setOrderData] = useState(null)
+  let [orderedItems,setOrderedItems] = useState(null)
 
   useEffect(() => {
     (async function cartItems() {
@@ -219,8 +220,37 @@ function CartItems({ loginStat }) {
         }
       };
       await handlePayment()
+      setOrderedItems([{productId:cart[id][0]._id,productName:cart[id][0].name,quantity:cart[id][1]}])
     };
-
+    useEffect(()=>{
+      if(!paymentId || !orderedItems) return;
+      (async function updateOrder(){
+        let body = {
+          orderedItems:orderedItems,
+          paymentId:paymentId,
+          paymentDate:paymentDate,
+          paymentAmount:paymentAmount,
+          orderId:orderData.newOrder.id,
+          deliveryCharge:orderData.orderDetails.deliveryCharges,
+          estimatedDeliveryTime:orderData.orderDetails.estimatedDeliveryTime
+        }
+        const response = await fetch("http://localhost:3000/orders/addToOrder",{
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify(body),
+          credentials:"include"
+        })
+        if(!response.ok){
+          let error = await response.json()
+          alert(error)
+        }
+        if(response.ok){
+          alert("Ordered Successfully\nOrder Id : "+orderData.newOrder.id+"\nTransaction Id : "+paymentId)
+        }
+      })()
+    },[paymentId,orderedItems])
   return loginStat ? (
     <div className="cart">
       <div className="top-section-cart">

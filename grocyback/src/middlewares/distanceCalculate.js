@@ -47,7 +47,7 @@ const calculateDistance = async (req, res, next) => {
     deliveryCharges = 0
   }
   req.distance = distance
-  req.duration = duration
+  req.duration = duration || "1 m"
   req.deliveryCharges = deliveryCharges
   next()
 };
