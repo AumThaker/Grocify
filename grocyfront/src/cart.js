@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { data, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import "./cart.css";
@@ -97,6 +97,10 @@ function Nav({ loginStat, logout }) {
 function CartItems({ loginStat }) {
   let [cart, setCart] = useState(null);
   let [error, setError] = useState(null);
+  let [paymentId,setPaymentId] = useState(null)
+  let [paymentDate,setPaymentDate] = useState(null)
+  let [paymentAmount,setPaymentAmount] = useState(null)
+  let [orderData,setOrderData] = useState(null)
 
   useEffect(() => {
     (async function cartItems() {
@@ -139,10 +143,83 @@ function CartItems({ loginStat }) {
         setCart(updatedCart)
       }
   }
-
   async function singleItemOrder(id){
-    console.log(cart[id][0],cart[id][1])
-  }
+    let body = {
+      productId:cart[id][0]._id,
+      quantity:cart[id][1]
+    }
+    const loadRazorpayScript = () => {
+      return new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.onload = () => resolve(true);
+        script.onerror = () => resolve(false);
+        document.body.appendChild(script);
+      });
+    };
+  
+    const handlePayment = async () => {
+      const res = await loadRazorpayScript();
+  
+      if (!res) {
+        alert("Failed to load Razorpay script. Check your internet connection.");
+        return;
+      }else{
+        const response = await fetch("http://localhost:3000/orders/createOrderSingleItem",{
+          method: "POST",
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body: JSON.stringify(body),
+          credentials:"include"
+        })
+        if(!response.ok){
+          const error = await response.json()
+          alert(error.message)
+        }
+        let result = response.json().then(data => {setOrderData(data);console.log(data);openRazorpayCheckout(data);})
+      }
+      }
+      const openRazorpayCheckout = (orderData) => {
+        const options = {
+          key: process.env.RAZORPAY, // Replace with environment variable
+          amount: orderData.newOrder.amount, // Amount in the smallest currency unit
+          currency: "INR",
+          name: "Grocify",
+          description: "Grocify Shopping",
+          image: "", // Replace with your logo URL
+          order_id: orderData.newOrder.id, // Order ID from backend
+          handler: function (response) {
+            setPaymentId(response.razorpay_payment_id);
+            setPaymentDate(new Date().toLocaleString());
+            setPaymentAmount(orderData.newOrder.amount); // Use correct value
+          },
+          prefill: {
+            name: orderData.userDetails.name,
+            email: orderData.userDetails.email,
+            contact: orderData.userDetails.number, // Ensure correct key
+          },
+          notes: {
+            address: "Shubham Complex",
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        };
+    
+        const rzp = new window.Razorpay(options);
+        rzp.on("payment.failed", function (response) {
+          alert(`Payment failed: ${response.error.description}`);
+        });
+    
+        try {
+          rzp.open();
+        } catch (error) {
+          console.error("Error opening Razorpay checkout:", error);
+        }
+      };
+      await handlePayment()
+    };
 
   return loginStat ? (
     <div className="cart">
@@ -161,8 +238,8 @@ function CartItems({ loginStat }) {
         {cart ? (
           cart.map((item, id) => {
             return (
-              <div className="itemBox">
-                <img src={item[0].imageUrl} alt="cartImage" id="cartImage"></img>
+              <div className="itemBox" key={id}>
+                <img src={item[0].imageUrl?item[0].imageUrl:"loading.jpg"} alt="cartImage" id="cartImage"></img>
                 <span id="cartItemName">{item[0].name}</span>
                 <span id="cartItemPrice">
                   Rs{item[0].price} / {item[0].unit}

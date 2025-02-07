@@ -27,7 +27,7 @@ const calculateDistance = async (req, res, next) => {
 `);
   let result = await response.json();
   let distance = result.rows[0].elements[0].distance.value/1000
-  let duration = result.rows[0].elements[0].duration.value
+  let duration = result.rows[0].elements[0].duration.text
   let deliveryCharges;
   if (distance <= 2) {
     deliveryCharges = distance * 2;  // 0 - 2 km range

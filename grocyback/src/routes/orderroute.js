@@ -1,7 +1,8 @@
 import { Router } from 'express'
 import verifyToken from '../middlewares/token.js';
-import { orderSingleItem } from '../controllers/ordercontrol.js';
+import { addToOrder, createOrderSingleItem } from '../controllers/ordercontrol.js';
 import { calculateDistance } from '../middlewares/distanceCalculate.js';
 const router = Router();
-router.route("/orderSingleItem").post(verifyToken,calculateDistance,orderSingleItem)
+router.route("/createOrderSingleItem").post(verifyToken,calculateDistance,createOrderSingleItem)
+router.route("/addToOrder").post(verifyToken,addToOrder)
 export default router
