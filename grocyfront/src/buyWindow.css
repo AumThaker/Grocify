@@ -60,11 +60,6 @@
     width: 100%;
     gap: 10px;
 }
-.orderPayment{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 /* Section titles */
 .order-section-title {
@@ -100,8 +95,8 @@
     padding: 10px;
     background: #eef5ff;
     border-radius: 10px;
-    width: 98.5%;
-    text-align: left;
+    width: 98%;
+    text-align: center;
 }
 
 .orderPayment span {
@@ -119,7 +114,7 @@
     padding: 10px;
     background: #e9f7ef;
     border-radius: 10px;
-    width: 98.5%;
+    width: 100%;
     text-align: center;
 }
 

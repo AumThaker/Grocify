@@ -55,4 +55,30 @@ const changeQuantity = async (req, res) => {
   await user.save()
   return res.status(200).json({message:"Quantity changed"});
 };
-export { addToCart, cartItems, changeQuantity };
+
+const removeFromCart = async (req,res)=>{
+  const {productId} = req.query
+  if (!productId)
+    return res.status(400).json({ message: "Cannot remove from cart" });
+  const user = await User.findById(req.user._id)
+  if (!user) return res.status(400).json({ message: "User not found" });
+  let cartIndex = user.cart.findIndex(item=>item.productId.toString()===productId.toString())
+  let newCart = user.cart.filter((item,index)=>{
+    return index!=cartIndex
+  })
+  user.cart = newCart
+  await user.save()
+  try {
+    let products = user.cart
+    const cartItems = await Promise.all(
+      products.map(async (product) => {
+        const item = await GrocyAPI.findById(product.productId);
+        return [item,product.quantity];
+      })
+    );
+    return res.status(200).json({message:"Removed From Cart",cart:cartItems})
+  } catch (error) {
+    return res.status(500).json({ message: "Error fetching cart items" });
+  }
+}
+export { addToCart, cartItems, changeQuantity, removeFromCart};

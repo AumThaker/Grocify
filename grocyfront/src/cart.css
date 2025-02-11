@@ -64,13 +64,27 @@
     text-align: center;
     margin-top: 5px;
 }
+.cart-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    max-width: 300px;
+}
 .BuyThis{
-    width: 150px;
-    max-width: 150px;
+    width: 100px;
     height: 30px;
     border-radius: 10px;
     border-style: none;
     font-family: 'MouldyCheese';
+}
+.cart-remove{
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    border-style: none;
+    font-family: 'MouldyCheese';
+    background-color: red;
+    color: white;
 }
 .login-first{
     position: absolute;
@@ -82,4 +96,12 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+}
+.no-cart{
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 30px;
 }
