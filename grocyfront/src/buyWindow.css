@@ -1,0 +1,135 @@
+/* Main container */
+.AllOrders {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    width: 100%;
+}
+
+/* Heading */
+.AllOrders h1 {
+    font-size: 2rem;
+    color: #222;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Order grid container */
+.order-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Auto-adjusts based on screen size */
+    gap: 20px;
+    width: 90%;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Order card */
+.order {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.order:hover {
+    transform: scale(1.02);
+}
+
+/* Order image */
+.order img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* Order details container */
+.order-details {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+.orderPayment{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Section titles */
+.order-section-title {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+/* Ordered items */
+.orderItemsName {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.orderItemsName span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #444;
+}
+
+/* Payment section */
+.orderPayment {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+    gap: 5px;
+    padding: 10px;
+    background: #eef5ff;
+    border-radius: 10px;
+    width: 98.5%;
+    text-align: left;
+}
+
+.orderPayment span {
+    color: #555;
+    font-weight: 600;
+}
+
+/* Delivery status */
+.orderDeliver {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #28a745;
+    padding: 10px;
+    background: #e9f7ef;
+    border-radius: 10px;
+    width: 98.5%;
+    text-align: center;
+}
+
+/* No orders message */
+.no-order {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #777;
+    padding: 20px;
+    background: #fff3cd;
+    border-radius: 10px;
+    text-align: center;
+}

@@ -1,4 +1,4 @@
-import { data, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import "./cart.css";
@@ -49,7 +49,12 @@ function Nav({ loginStat, logout }) {
         <Link to={"/cart"} style={{ textDecoration: "none", color: "inherit" }}>
         <span>Cart</span>
         </Link>
-        <span>Orders</span>
+        <Link
+              to={"/order"}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <span>Orders</span>
+            </Link>
       </div>
       <div className="nav-profile">
         {loginStat ? (
@@ -220,7 +225,7 @@ function CartItems({ loginStat }) {
         }
       };
       await handlePayment()
-      setOrderedItems([{productId:cart[id][0]._id,productName:cart[id][0].name,quantity:cart[id][1]}])
+      setOrderedItems([{productId:cart[id][0]._id,productName:cart[id][0].name,productImage:cart[id][0].imageUrl,quantity:cart[id][1]}])
     };
     useEffect(()=>{
       if(!paymentId || !orderedItems) return;
@@ -249,6 +254,8 @@ function CartItems({ loginStat }) {
         if(response.ok){
           alert("Ordered Successfully\nOrder Id : "+orderData.newOrder.id+"\nTransaction Id : "+paymentId)
         }
+        setPaymentId(null)
+        setOrderedItems(null)
       })()
     },[paymentId,orderedItems])
   return loginStat ? (
@@ -304,7 +311,7 @@ function CartItems({ loginStat }) {
             );
           })
         ) : (
-          <div className="no-cart"></div>
+          <div className="no-cart">Nothing In Cart</div>
         )}
       </div>
     </div>

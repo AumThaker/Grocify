@@ -69,11 +69,12 @@ const addToOrder = async (req, res) => {
     return res.status(404).json({ message: "PAYMENT DETAILS NOT AVAILABLE" });
   const user = await User.findById(req.user._id);
   if (!user) return res.status(404).json({ message: "USER NOT FOUND" });
-  let items = orderedItems.map((item, id) => {
+  let items = await orderedItems.map((item, id) => {
     let productId = item.productId;
     let productName = item.productName;
     let productQuantity = item.quantity;
-    const order = { productId, productName, productQuantity };
+    let productImage = item.productImage;
+    const order = { productId, productName, productQuantity , productImage };
     return order;
   });
   let orderDetails = {

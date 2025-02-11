@@ -22,16 +22,16 @@ function Nav() {
       }
     }
   }, [loginStat]);
-  async function logout(){
-    const response = await fetch("http://localhost:3000/user/logoutUser",{
-      method:"POST",
-      credentials:"include"
-    })
-    if(!response.ok) {
+  async function logout() {
+    const response = await fetch("http://localhost:3000/user/logoutUser", {
+      method: "POST",
+      credentials: "include",
+    });
+    if (!response.ok) {
       let error = await response.json();
-      console.log(error.message)
+      console.log(error.message);
     }
-    if(response.ok) setLoginStat(false)
+    if (response.ok) setLoginStat(false);
   }
   return (
     <>
@@ -59,10 +59,18 @@ function Nav() {
             >
               <span>Groceries</span>
             </Link>
-            <Link to={"/cart"} style={{ textDecoration: "none", color: "inherit" }}>
-        <span>Cart</span>
-        </Link>
-            <span>Orders</span>
+            <Link
+              to={"/order"}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <span>Cart</span>
+            </Link>
+            <Link
+              to={"/cart"}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <span>Orders</span>
+            </Link>
           </div>
           <div className="profile">
             {loginStat ? (
@@ -93,10 +101,13 @@ function Nav() {
               </div>
             ) : (
               <motion.div className="LoginBtn-wrapper">
-                <Link to={"/login"} style={{textDecoration:"none"}}>
-                <motion.button whileTap={{ scale: 0.85 }} className="LoginBtn">
-                  Log in
-                </motion.button>
+                <Link to={"/login"} style={{ textDecoration: "none" }}>
+                  <motion.button
+                    whileTap={{ scale: 0.85 }}
+                    className="LoginBtn"
+                  >
+                    Log in
+                  </motion.button>
                 </Link>
               </motion.div>
             )}

@@ -49,7 +49,12 @@ function Nav({ loginStat,logout }) {
         <Link to={"/cart"} style={{ textDecoration: "none", color: "inherit" }}>
         <span>Cart</span>
         </Link>
-        <span>Orders</span>
+        <Link
+              to={"/order"}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <span>Orders</span>
+            </Link>
       </div>
       <div className="nav-profile">
         {loginStat ? <div className="nav-logout-profile">

@@ -13,6 +13,10 @@ const order = mongoose.Schema({
     productQuantity:{
       type:String,
       required:true
+    },
+    productImage:{
+      type:String,
+      required:true
     }
   }],
   deliverStatus:{
