@@ -28,7 +28,7 @@ export default function BuyWindow() {
   return (
     <>
       <Nav logout={logout} loginStat={loginStat} />
-      <OrderBody />
+      <OrderBody loginStat={loginStat}/>
     </>
   );
 }
@@ -98,7 +98,7 @@ function Nav({ loginStat, logout }) {
     </div>
   );
 }
-function OrderBody() {
+function OrderBody({loginStat}) {
   let [orderDetails, setOrderDetails] = useState(null);
   useEffect(() => {
     (async function fetchOrder() {
@@ -115,8 +115,7 @@ function OrderBody() {
       console.log(result);
     })();
   }, []);
-  return (
-    <div className="AllOrders">
+  return loginStat?<div className="AllOrders">
   <h1>Your Orders</h1>
   <div className="order-list">
     {orderDetails ? (
@@ -158,7 +157,5 @@ function OrderBody() {
       <div className="no-order">NO ORDERS YET</div>
     )}
   </div>
-</div>
-
-  );
+</div>:<div className="login-first">Login To See Orders</div>
 }

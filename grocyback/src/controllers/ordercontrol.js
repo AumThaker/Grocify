@@ -52,6 +52,49 @@ const createOrderSingleItem = async (req, res) => {
     res.status(500).json("Failed to create order");
   }
 };
+const createOrderAllItems = async (req, res) => {
+  try {
+    const products = req.body;
+    if (!products)
+      return res.status(400).json({ message: "NOTHING IN CART TO ORDER" });
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(400).json({ message: "USER NOT FOUND" });
+    const distance = req.distance;
+    const duration = req.duration;
+    const deliveryCharge = req.deliveryCharges;
+    if (distance > 30000)
+      return res.status(400).json({ message: "NOT AVAILABLE IN YOUR REGION" });
+    let totalPrice = products.reduce((acc,product)=>{return acc + product.price*product.productQuantity},0) + deliveryCharge
+    const totalInPaise = totalPrice * 100;
+    let instance = new razorpay({
+      key_id: process.env.RAZORPAYID,
+      key_secret: process.env.RAZORPAYSECRET,
+    });
+    const newOrder = await instance.orders.create({
+      amount: totalInPaise,
+      currency: "INR",
+      notes: { description: "Grocify Shopping" },
+    });
+    const responseObject = {
+      userDetails: {
+        name: user.name,
+        email: user.email,
+        number: user.phone,
+      },
+      orderDetails: {
+        totalCharges: totalPrice,
+        itemCharges: totalPrice-deliveryCharge,
+        deliveryCharges: deliveryCharge,
+        estimatedDeliveryTime: duration,
+      },
+      newOrder,
+    };
+    return res.status(200).json(responseObject);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json("Failed to create order");
+  }
+};
 const addToOrder = async (req, res) => {
   const {
     orderedItems,
@@ -62,6 +105,7 @@ const addToOrder = async (req, res) => {
     deliveryCharge,
     estimatedDeliveryTime,
   } = req.body;
+  console.log(orderedItems)
   if (!orderedItems)
     return res.status(404).json({ message: "NO ITEMS ORDERED" });
   if (!orderId) return res.status(404).json({ message: "ORDER ID NOT FOUND" });
@@ -69,16 +113,14 @@ const addToOrder = async (req, res) => {
     return res.status(404).json({ message: "PAYMENT DETAILS NOT AVAILABLE" });
   const user = await User.findById(req.user._id);
   if (!user) return res.status(404).json({ message: "USER NOT FOUND" });
-  let items = await orderedItems.map((item, id) => {
-    let productId = item.productId;
-    let productName = item.productName;
-    let productQuantity = item.quantity;
-    let productImage = item.productImage;
-    const order = { productId, productName, productQuantity , productImage };
-    return order;
-  });
+  let order = [];
+await orderedItems.forEach((item) => {
+  let { productId, productName, productQuantity, productImage } = item;
+  order.push({ productId, productName, productQuantity, productImage });
+});
+  console.log(order)
   let orderDetails = {
-    orderedItems: items,
+    orderedItems: order,
     deliverStatus: "Packaging",
     estimatedTime: estimatedDeliveryTime,
     payment: {
@@ -109,7 +151,9 @@ const fetchOrders = async (req, res) => {
       return await Orders.findById(order.orderId);
     })
   );
-  if(!orders) return res.status(404).json({message:"NO ORDERS TO SHOW"})
-  return res.status(200).json({message:"ORDER FETCHED",orderDetails:orders})
+  if (!orders) return res.status(404).json({ message: "NO ORDERS TO SHOW" });
+  return res
+    .status(200)
+    .json({ message: "ORDER FETCHED", orderDetails: orders });
 };
-export { createOrderSingleItem, addToOrder, fetchOrders };
+export { createOrderSingleItem, addToOrder, fetchOrders, createOrderAllItems };

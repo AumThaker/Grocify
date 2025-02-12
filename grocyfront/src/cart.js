@@ -241,14 +241,6 @@ function CartItems({ loginStat }) {
       }
     };
     await handlePayment();
-    setOrderedItems([
-      {
-        productId: cart[id][0]._id,
-        productName: cart[id][0].name,
-        productImage: cart[id][0].imageUrl,
-        quantity: cart[id][1],
-      },
-    ]);
   }
   useEffect(() => {
     if (!paymentId || !orderedItems) return;
@@ -308,30 +300,95 @@ function CartItems({ loginStat }) {
     }
   }
   async function buyAll() {
-    if (cart.length === 0) alert("No Items In Cart");
-    else {
-      try {
-        const body = cart.map((item,id)=>{return [item[0]._id,item[1]]})
-        const response = await fetch("http://localhost:3000/orders/buyAll",{
-          method:"POST",
-          headers:{
-            "Content-Type":"application/json"
-          },
-          body:JSON.stringify(body),
-          credentials:"include"
-        })
-        if(!response.ok){
-          const error = await response.json()
-          alert(error.message)
+    const loadRazorpayScript = () => {
+      return new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.onload = () => resolve(true);
+        script.onerror = () => resolve(false);
+        document.body.appendChild(script);
+      });
+    };
+
+    const handlePayment = async () => {
+      const res = await loadRazorpayScript();
+
+      if (!res) {
+        alert(
+          "Failed to load Razorpay script. Check your internet connection."
+        );
+        return;
+      } else {
+        if (cart.length === 0) alert("No Items In Cart");
+        else {
+          try {
+            const body = cart.map((item,id)=>{return {productId:item[0]._id,productName:item[0].name,price:item[0].price,productImage:item[0].imageUrl,productQuantity:item[1]} })
+            const response = await fetch("http://localhost:3000/orders/createOrderAllItems",{
+              method:"POST",
+              headers:{
+                "Content-Type":"application/json"
+              },
+              body:JSON.stringify(body),
+              credentials:"include"
+            })
+            if(!response.ok){
+              const error = await response.json()
+              alert(error.message)
+            }
+            if(response.ok){
+              let result = response.json().then((data) => {
+                setOrderData(data);
+                console.log(data);
+                openRazorpayCheckout(data);
+              });
+            }
+          } catch (error) {
+            console.log(error)
+          }
         }
-        if(response.ok){
-          const result = await response.json()
-          console.log(result)
-        }
-      } catch (error) {
-        console.log(error)
       }
-    }
+    };
+    const openRazorpayCheckout = (orderData) => {
+      const options = {
+        key: process.env.RAZORPAY, // Replace with environment variable
+        amount: orderData.newOrder.amount, // Amount in the smallest currency unit
+        currency: "INR",
+        name: "Grocify",
+        description: "Grocify Shopping",
+        image: "", // Replace with your logo URL
+        order_id: orderData.newOrder.id, // Order ID from backend
+        handler: function (response) {
+          setPaymentId(response.razorpay_payment_id);
+          setPaymentDate(new Date().toLocaleString());
+          setPaymentAmount(orderData.newOrder.amount); // Use correct value
+        },
+        prefill: {
+          name: orderData.userDetails.name,
+          email: orderData.userDetails.email,
+          contact: orderData.userDetails.number, // Ensure correct key
+        },
+        notes: {
+          address: "Shubham Complex",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.on("payment.failed", function (response) {
+        alert(`Payment failed: ${response.error.description}`);
+      });
+
+      try {
+        rzp.open();
+      } catch (error) {
+        console.error("Error opening Razorpay checkout:", error);
+      }
+    };
+    await handlePayment();
+    const order = cart.map((item,id)=>{return {productId:item[0]._id,productName:item[0].name,price:item[0].price,productImage:item[0].imageUrl,productQuantity:item[1]} })
+    setOrderedItems(order)
   }
   return loginStat ? (
     <div className="cart">
