@@ -5,6 +5,7 @@ import Groceries from './groceries';
 import Login from './login';
 import Cart from './cart';
 import BuyWindow from './buyWindow';
+import Register from './register';
 
 function App() {
   return <BrowserRouter>
@@ -12,6 +13,7 @@ function App() {
     <Route path='/' element={<Home />}></Route>
     <Route path='/groceries' element={<Groceries />}></Route>
     <Route path='/login' element={<Login />}></Route>
+    <Route path='/register' element={<Register />}></Route>
     <Route path='/cart' element={<Cart />}></Route>
     <Route path='/order' element={<BuyWindow />}></Route>
   </Routes>

@@ -51,6 +51,10 @@
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: 10px;
+    pointer-events: none;
+    user-select: none;
+    user-drag: none;
+    -webkit-user-drag: none;
 }
 
 /* Order details container */
