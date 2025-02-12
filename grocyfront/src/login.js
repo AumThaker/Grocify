@@ -59,7 +59,7 @@ function LoginContainer() {
             <label htmlFor="login-password">Password</label>
             <input type="password" id="login-password" name="password"></input>
           </div>
-          <span id="no-acc">Don't have a Grocify Account ? <Link to={"/register"}>Register Now</Link></span>
+          <span id="no-acc">Don't have a Grocify Account ? <Link to={"/register"}>Register Now</Link> , <Link to={"/"}>Home</Link></span>
           <button type="submit">Log In</button>
           <span style={{ color: "red" }}>{error}</span>
         </form>
