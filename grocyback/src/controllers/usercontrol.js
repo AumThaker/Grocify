@@ -1,5 +1,5 @@
 import User from "../models/usermodel.js";
-import nodemailer from "nodemailer"
+import nodemailer from "nodemailer";
 
 const registerUser = async (req, res) => {
   try {
@@ -28,13 +28,19 @@ const registerUser = async (req, res) => {
     const passRegex =
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
     if (!passRegex.test(password))
+      return res.status(400).json({
+        message:
+          "PASSWORD SHOULD CONTAIN 1 UPPERCASE , 1 LOWERCASE , 1 DIGIT , 1 SPECIAL CHARACTER",
+      });
+    if (password != con_password)
       return res
         .status(400)
-        .json({ message: "PASSWORD SHOULD CONTAIN 1 UPPERCASE , 1 LOWERCASE , 1 DIGIT , 1 SPECIAL CHARACTER" });
-    if(password!=con_password) return res.status(400).json({message:"PASSWORD AND CONFIRM PASSWORD ARE NOT THE SAME"})
+        .json({ message: "PASSWORD AND CONFIRM PASSWORD ARE NOT THE SAME" });
     const phoneRegex = /^((\+91?)|\+)?[7-9][0-9]{9}$/;
     if (!phoneRegex.test(phone))
-      return res.status(400).json({ message: "PHONE NUMBER SHOULD BE OF 10 DIGITS" });
+      return res
+        .status(400)
+        .json({ message: "PHONE NUMBER SHOULD BE OF 10 DIGITS" });
     let checkUserExists = await User.findOne({ username: username });
     if (checkUserExists)
       return res.status(405).json({ message: "USERNAME ALREADY EXISTS" });
@@ -42,7 +48,7 @@ const registerUser = async (req, res) => {
     if (existingEmail) {
       return res.status(409).json({ message: "EMAIL ID ALREADY EXISTS" });
     }
-    const userCreate = await User.create({
+    let user = {
       name: username,
       email: email,
       password: password,
@@ -54,12 +60,8 @@ const registerUser = async (req, res) => {
         state: state,
         pincode: pincode,
       },
-    });
-    console.log(userCreate)
-    if (!userCreate)
-      return res.status(500).json({ message: "ACCOUNT NOT CREATED" });
-    let createdUser = await User.findById(userCreate._id);
-    return res.status(200).json({ userCreated: createdUser });
+    };
+    return res.status(200).json({ user: user });
   } catch (error) {
     console.log(error);
     return res
@@ -72,10 +74,8 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password)
-      return res
-        .status(400)
-        .json({ message: "INCORRECT EMAIL OR PASSWORD" });
-    const user = await User.findOne({ email:email });
+      return res.status(400).json({ message: "INCORRECT EMAIL OR PASSWORD" });
+    const user = await User.findOne({ email: email });
     if (!user)
       return res
         .status(400)
@@ -106,40 +106,44 @@ const loginUser = async (req, res) => {
 };
 const logoutUser = async (req, res) => {
   const loggedInUser = await User.findById(req.user._id);
-  console.log(loggedInUser)
+  console.log(loggedInUser);
   if (!loggedInUser)
     return res.status(400).json({ message: "User not logged in" });
   loggedInUser.loginToken = undefined;
   await loggedInUser.save({ validateBeforeSave: false });
   res.clearCookie("loginToken");
   let loggedOutUser = await User.findById(req.user._id);
-  return res.status(200).json({message:"LOGGED OUT SUCCESFULLY",user:loggedOutUser})
+  return res
+    .status(200)
+    .json({ message: "LOGGED OUT SUCCESFULLY", user: loggedOutUser });
 };
 
-const registerOtpSent = async (req,res)=>{
-    try {
-      const {email,phone} = req.body
-      if(!email) return res.status(200).json({message:"EMAIL NOT AVAILABLE"})
-      if(!phone) return res.status(200).json({message:"PHONE NUMBER NOT AVAILABLE"})
-        let phoneNumber = `+91${phone.toString()}`
-      let otp = Math.floor(1000 + Math.random() * 9000);
-      const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false,
-        auth: {
-          user: "thakeraum1511@gmail.com",
-          pass: "jzjj twhi kozs hrnc",
-        },
-      });
-      transporter.verify(function (error, success) {
-        if (error) {
-          console.log("Error:", error);
-        } else {
-          console.log("SMTP server is ready to send emails!");
-        }
-      });
-      let emailTemplate = `
+const registerOtpSent = async (req, res) => {
+  try {
+    const { user } = req.body;
+    if (!user.email)
+      return res.status(400).json({ message: "EMAIL NOT AVAILABLE" });
+    if (!user.phone)
+      return res.status(400).json({ message: "PHONE NUMBER NOT AVAILABLE" });
+    let phoneNumber = `+91${user.phone.toString()}`;
+    let otp = Math.floor(1000 + Math.random() * 9000);
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: "thakeraum1511@gmail.com",
+        pass: "jzjj twhi kozs hrnc",
+      },
+    });
+    transporter.verify(function (error, success) {
+      if (error) {
+        console.log("Error:", error);
+      } else {
+        console.log("SMTP server is ready to send emails!");
+      }
+    });
+    let emailTemplate = `
       <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f4f4f4;">
           <div style="max-width: 500px; background: white; padding: 20px; border-radius: 10px; margin: auto;">
               <h2 style="color: #007bff;">Your OTP Code</h2>
@@ -147,38 +151,49 @@ const registerOtpSent = async (req,res)=>{
               <div style="font-size: 24px; font-weight: bold; background: #f8f9fa; padding: 10px; border-radius: 5px; display: inline-block;">
                   ${otp}
               </div>
-              <p>This OTP is valid for the next 10 minutes. Do not share it with anyone.</p>
+              <p>This OTP is valid for the next 5 minutes. Do not share it with anyone.</p>
           </div>
       </div>
     `;
-      var mailOptions = {
-        from: "thakeraum1511@gmail.com",
-        to: email,
-        subject: "Grocify Account Creation Step",
-        html:emailTemplate
-      };
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          return res.status(404).json("Email not verified");
-        } else {
-          console.log("Email sent: " + info.response);
-        }
-      });
-    const accountSid = process.env.accountSid;
-    const authToken = process.env.authToken;
-    const client = require('twilio')(accountSid, authToken);
-  
-  client.messages
-      .create({
-          from: '+18319992437',
-          to: phoneNumber
-      })
-      .then(message => console.log(message.sid))
-      .done();
-    return res.status(200).json({message:"OTP SENT",otp:otp})
-    } catch (error) {
-      return res.status(400).json({message:"SOME ERROR OCCURED",error:error})
-    }
-}
+    var mailOptions = {
+      from: "thakeraum1511@gmail.com",
+      to: user.email,
+      subject: "Grocify Account Creation Step",
+      html: emailTemplate,
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        return res.status(404).json("Email not verified");
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+    //complete after upgrading twilio
+    // const accountSid = process.env.accountSid;
+    // const authToken = process.env.authToken;
+    // const client = require("twilio")(accountSid, authToken);
+    // client.messages
+    //   .create({
+    //     body: `Grocify Shopping\nAn Account with your number is registered\nOTP is ${otp}\nOTP valid for 5mins`,
+    //     from: "+18319992437",
+    //     to: phoneNumber,
+    //   })
+    //   .then((message) => console.log(message.sid))
+    //   .done();
+    return res.status(200).json({ message: "OTP SENT", otp: otp });
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: "SOME ERROR OCCURED", error: error });
+  }
+};
+const register = async (req, res) => {
+  const { user } = req.body;
+  if (!user) return res.status(404).json({ message: "USER DATA NOT FOUND" });
+  console.log(user);
+  // const createdUser = await User.create(user)
+  // if(!createdUser) return res.status(400).json({message:"ACCOUNT NOT CREATED"})
+  // return res.status(200).json({message:"ACCOUNT CREATED",user:createdUser})
+};
 
-export { registerUser, loginUser, logoutUser, registerOtpSent};
+export { registerUser, loginUser, logoutUser, registerOtpSent, register };

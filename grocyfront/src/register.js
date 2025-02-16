@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 
 export default function Register() {
   let [error, setError] = useState(null);
-  let [regStatus, setRegStatus] = useState(true);
-  let [userData,setUserData] = useState(null)
-  let [otp,setOtp] = useState(false)
+  let [regStatus, setRegStatus] = useState(false);
+  let [userData, setUserData] = useState(null);
+  let [userCreated,setUserCreated] = useState(null)
+  let [otp, setOtp] = useState(false);
   const inputRefs = useRef([]);
 
   function handleOtpNumber(e, index) {
@@ -57,8 +58,8 @@ export default function Register() {
       }
       if (response.ok) {
         let result = await response.json();
-        setRegStatus(true);
-        setUserData(result)
+        setUserData(result);
+        console.log(result)
         setError(null);
       }
     } catch (error) {
@@ -66,70 +67,82 @@ export default function Register() {
       console.log(error);
     }
   }
-  useEffect(()=>{
-    if(!otp) return;
+  useEffect(() => {
+    if (!userData) return;
     (async function otpFetch() {
-      let body = {email:userData.email,phone:userData.phone}
+      let body = userData;
       try {
-        const response = await fetch("http://localhost:3000/user/registerOtpCreate",{
-          method:"POST",
-          headers:{
-            "Content-Type":"application/json"
-          },
-          body:JSON.stringify(body)
-        })
-        if(!response.ok){
-          let error = await response.json()
-          alert(error.message)
+        const response = await fetch(
+          "http://localhost:3000/user/registerOtpCreate",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+          }
+        );
+        if (!response.ok) {
+          let error = await response.json();
+          alert(error.message);
         }
-        if(response.ok){
-          let result = await response.json()
-          setOtp(result.otp)
+        if (response.ok) {
+          let result = await response.json();
+          console.log(result)
+          setOtp(result.otp);
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    })()
-  },[otp])
-  async function otpVerify(e){
-    
+    })();
+  }, [userData]);
+  useEffect(() => {
+    if (otp) {
+      setTimeout(() => {
+        setOtp(null);
+      }, 300000);
+    }
+  }, [otp]);
+  async function otpVerify(e) {
+    e.preventDefault();
+    let form = e.target;
+    let formData = new FormData(form);
+    let formObject = Object.fromEntries(formData);
+    let otpEntered = "";
+    for (let key in formObject) {
+      if (formObject.hasOwnProperty(key)) {
+        let value = formObject[key];
+        otpEntered = otpEntered + value;
+      }
+    }
+    if (otp.toString() === otpEntered) {
+      try {
+        const response = await fetch("http://localhost:3000/user/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        });
+        if (!response.ok) {
+          let error = await response.json();
+          alert(error.message);
+        }
+        if (response.ok) {
+          let result = await response.json();
+          setRegStatus(true);
+          setUserCreated(result.user)
+        }
+      } catch (error) {}
+    } else {
+      alert("OTP ENTERED IS INCORRECT");
+    }
   }
   return (
-    // <div className="redirect-reg">
-    //       <h1>Registered Successfully</h1>
-    //       <motion.div className="redirectBtn-wrapper">
-    //         <Link to={"/"} style={{ textDecoration: "none" }}>
-    //           <motion.button whileTap={{ scale: 0.85 }} className="redirctBtn">
-    //             Go To Home Page
-    //           </motion.button>
-    //         </Link>
-    //       </motion.div>
-    //     </div>
+
     <>
       <img src="navImage.jpg" alt="img" id="reg-img" />
-      {regStatus ? (
-        <div className="otp-box">
-        <h3>OTP SENT TO EMAIL AND PHONE</h3>
-        <form>
-          <div className="inputs">
-            {[0, 1, 2, 3].map((_, index) => (
-              <input
-                key={index}
-                type="number"
-                name={"input"+index}
-                min={0}
-                ref={(el) => (inputRefs.current[index] = el)}
-                onInput={(e) => handleOtpNumber(e, index)}
-                onKeyDown={(e) => handleBackspace(e, index)}
-                className="otp-input"
-              />
-            ))}
-          </div>
-          <button type="submit" id="otpSent">SUBMIT VOTE</button>
-        </form>
-      </div>
-      ) : (
-        <div className="form-container">
+      {!regStatus ? !otp ? <div className="form-container">
           <h2>Register Now</h2>
           <form id="reg-form" onSubmit={(e) => register(e)}>
             <div className="form-wrapper">
@@ -251,9 +264,38 @@ export default function Register() {
               <Link to={"/"}>Home</Link>
             </h3>
             <span>{error}</span>
+          </form></div> : <div className="otp-box">
+          <h3>OTP SENT TO EMAIL AND PHONE</h3>
+          <form onSubmit={(e) => otpVerify(e)}>
+            <div className="inputs">
+              {[0, 1, 2, 3].map((_, index) => (
+                <input
+                  key={index}
+                  type="number"
+                  name={"input" + index}
+                  min={0}
+                  ref={(el) => (inputRefs.current[index] = el)}
+                  onInput={(e) => handleOtpNumber(e, index)}
+                  onKeyDown={(e) => handleBackspace(e, index)}
+                  className="otp-input"
+                />
+              ))}
+            </div>
+            <button type="submit" id="otpSent">
+              SUBMIT VOTE
+            </button>
           </form>
+        </div> : <div className="redirect-reg">
+          <h1>Registered Successfully</h1>
+          <motion.div className="redirectBtn-wrapper">
+            <Link to={"/"} style={{ textDecoration: "none" }}>
+              <motion.button whileTap={{ scale: 0.85 }} className="redirctBtn">
+                Go To Home Page
+              </motion.button>
+            </Link>
+          </motion.div>
         </div>
-      )}
+      }
     </>
   );
 }

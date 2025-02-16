@@ -60,13 +60,13 @@ function Nav() {
               <span>Groceries</span>
             </Link>
             <Link
-              to={"/order"}
+              to={"/cart"}
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <span>Cart</span>
             </Link>
             <Link
-              to={"/cart"}
+              to={"/order"}
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <span>Orders</span>

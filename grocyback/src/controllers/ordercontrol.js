@@ -21,7 +21,8 @@ const createOrderSingleItem = async (req, res) => {
     if (distance > 30000)
       return res.status(400).json({ message: "NOT AVAILABLE IN YOUR REGION" });
     const totalPrice = item.price * quantity + deliveryCharge;
-    const totalInPaise = totalPrice * 100;
+    const totalInPaise = Math.floor(totalPrice * 100)
+    console.log(totalInPaise)
     let instance = new razorpay({
       key_id: process.env.RAZORPAYID,
       key_secret: process.env.RAZORPAYSECRET,
@@ -65,7 +66,7 @@ const createOrderAllItems = async (req, res) => {
     if (distance > 30000)
       return res.status(400).json({ message: "NOT AVAILABLE IN YOUR REGION" });
     let totalPrice = products.reduce((acc,product)=>{return acc + product.price*product.productQuantity},0) + deliveryCharge
-    const totalInPaise = totalPrice * 100;
+    const totalInPaise = Math.floor(totalPrice * 100)
     let instance = new razorpay({
       key_id: process.env.RAZORPAYID,
       key_secret: process.env.RAZORPAYSECRET,

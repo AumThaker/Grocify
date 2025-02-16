@@ -241,6 +241,8 @@ function CartItems({ loginStat }) {
       }
     };
     await handlePayment();
+    const order = cart.map((item,id)=>{return {productId:item[0]._id,productName:item[0].name,price:item[0].price,productImage:item[0].imageUrl,productQuantity:item[1]} })
+    setOrderedItems(order)
   }
   useEffect(() => {
     if (!paymentId || !orderedItems) return;
