@@ -4,17 +4,17 @@ body{
   background-color: rgb(242, 249, 255);
   overflow-x: hidden;
 }
-@font-face {
+@font-face{
   font-family: 'NightShift';
-  src: url("C:/Users/HIMANSHU THAKER/AppData/Local/Microsoft/Windows/Fonts/NightShiftRegular-KV8eZ.otf");
+  src: url("./assests/fonts/NIGHTSHIFTREGULAR-KV8EZ.OTF");
 }
-@font-face {
+@font-face{
   font-family: 'MouldyCheese';
-  src: url("C:/Users/HIMANSHU THAKER/AppData/Local/Microsoft/Windows/Fonts/MouldyCheeseRegular-WyMWG.ttf");
+  src: url("./assests/fonts/MOULDYCHEESEREGULAR-WYMWG.TTF");
 }
-@font-face {
+@font-face{
   font-family: 'Queensides';
-  src: url("C:/Users/HIMANSHU THAKER/AppData/Local/Microsoft/Windows/Fonts/Queensides-3z7Ey.ttf");
+  src: url("./assests/fonts/QUEENSIDES-3Z7EY.TTF");
 }
 #imageNav{
   display: block;
