@@ -16,60 +16,57 @@ body{
   font-family: 'Queensides';
   src: url("C:/Users/HIMANSHU THAKER/AppData/Local/Microsoft/Windows/Fonts/Queensides-3z7Ey.ttf");
 }
-nav{
-  display: flex;
-  flex-direction: column;
+#imageNav{
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
 }
 .descNav{
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
   position: absolute;
-  top: 37%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%,-50%);
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  gap: 5lvb;
+  gap: 25px;
 }
-#siteName{
+#siteName {
   font-family: 'MouldyCheese';
-  font-size: 16dvb;
+  font-size: 8vw;
   color: white;
   filter: drop-shadow(5px 5px 15px black);
   letter-spacing: 8px;
 }
-#siteTag{
+#siteTag {
   font-family: 'MouldyCheese';
-  font-size: 2dvb;
+  font-size: 0.8vw;
   color: white;
   filter: drop-shadow(5px 5px 15px black);
-  letter-spacing: 3px;
+  letter-spacing: 2px;
 }
-#imageNav{
-  display: block;
-  width:100lvw;
-  height: 100lvh;
-}
-.shopnow{
-  display: block;
-  width: 10dvw;
-  height: 6dvh;
+.shopnow {
+  width: 10vw;
+  height: 6vh;
   border-radius: 15px;
   border-style: none;
   background-color: rgb(255, 111, 111);
   color: white;
-  font-weight:bolder;
-  font-size: 2dvb;
+  font-weight: bolder;
+  font-size: 1vw;
   font-family: 'Queensides';
+  cursor: pointer;
 }
 .traverse-wrapper{
   display: flex;
-  color: green;
-  justify-content: center;
-  font-size: 25px;
-  font-weight: 100;
+  flex-direction: row;
   justify-content: space-between;
+  color: green;
+  font-size: 2vw;
+  font-weight: 100;
   margin-top: 20px;
   padding-bottom: 20px;
 }
@@ -83,194 +80,292 @@ nav{
   padding-left: 20px;
 }
 .profile{
-  padding-right: 10px;
+  display: flex;
+  flex-direction: row;
+  margin-top: -20px;
 }
-.LoginBtn{
+.LoginBtn,
+.LogOutBtn {
   display: block;
-  width: 100px;
-  height: 40px;
+  width: 8vw;
+  height: 6.5vh;
   border-radius: 10px;
   border-style: none;
   background-color: green;
   color: white;
   font-family: 'Queensides';
   font-weight: bolder;
-  margin-top: -10px;
   cursor: pointer;
+  margin: 10px;
+  font-size: 1.2vw;
 }
-.LogOutBtn{
-  display: block;
-  width: 100px;
-  height: 40px;
-  border-radius: 10px;
-  border-style: none;
-  background-color: green;
-  color: white;
-  font-family: 'Queensides';
-  font-weight: bolder;
-  margin-top: -10px;
-  cursor: pointer;
-  margin-right: 20px;
-}
-.logout-profile{
+.logout-profile {
   display: flex;
   flex-direction: row;
 }
-.bi-person-circle{
-  padding-top: -30px;
-}
-main{
+main {
   display: flex;
   flex-direction: column;
   margin-top: 30px;
+  align-items: center;
 }
-.infoSec{
+
+.infoSec {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  gap: 10px;
 }
-#aboutus{
-  font-size: 50px;
+
+#aboutus,
+#wcu,
+#product {
+  font-size: 3vw;
   font-family: 'Queensides';
-  text-decoration:underline;
+  text-decoration: underline;
   text-underline-offset: 10px;
   text-decoration-thickness: 3px;
   text-decoration-color: rgb(125, 106, 0);
-}
-#aboutUsPara{
-  display: block;
-  width: 1400px;
-  text-align: center;
-  font-size: 15px;
-  border-style: solid;
-  padding-bottom: 30px;
-  border-width: 0px 0px 2px 0px;
 }
 #wcu{
-  font-size: 50px;
-  font-family: 'Queensides';
-  text-decoration:underline;
-  text-underline-offset: 10px;
-  text-decoration-thickness: 3px;
-  text-decoration-color: rgb(125, 106, 0);
   margin-top: 30px;
 }
-.wcuBox{
-  display: flex;
-  flex-direction: row;
-  margin-top: 40px;
-  gap: 40px;
-  border-style: solid;
+#aboutUsPara {
+  max-width: 1400px;
+  font-size: 1.2vw;
+  border-bottom: 2px solid black;
   padding-bottom: 30px;
-  border-width: 0px 0px 2px 0px;
-}
-.fastDel,.quaAss,.secPay,.bestPri{
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-  height: 280px;
-  background-color: rgb(210, 210, 210);
-  border-radius: 10px;
-  align-items: center;
-  justify-content: center;
-}
-.fastDel img ,.quaAss img,.secPay img,.bestPri img{
-  display: block;
-  width: 200px;
-  height: 200px;
-  object-fit: contain;
-}
-.fastDel h1 , .quaAss h1, .secPay h1, .bestPri h1{
-  text-align: center;
-  font-size: 25px;
-  font-family: 'MouldyCheese';
-  letter-spacing: 2px;
-}
-#product{
-  font-size: 50px;
-  font-family: 'Queensides';
-  text-decoration:underline;
-  text-underline-offset: 10px;
-  text-decoration-thickness: 3px;
-  text-decoration-color: rgb(125, 106, 0);
-  margin-top: 30px;
 }
 .products{
-  display: flex;
-  flex-direction: row;
-  margin-top: 40px;
-  gap: 40px;
-  border-style: solid;
-  padding-bottom: 30px;
-  border-width: 0px 0px 2px 0px;
+  border-bottom: 2px solid black;
 }
-.veg,.fruit,.dairy,.grain{
+.wcuBox,
+.products {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+.product,.wcu{
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   height: 320px;
   background-color: rgb(210, 210, 210);
   border-radius: 10px;
-  justify-content: center;
   align-items: center;
-}
-.veg img ,.fruit img,.dairy img,.grain img{
-  display: block;
-  width: 200px;
-  height: 200px;
-  object-fit: contain;
-  margin-top: -20px;
-}
-.veg h3 , .fruit h3, .dairy h3, .grain h3{
+  justify-content: center;
   text-align: center;
-  font-size: 25px;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.product img,.wcu img{
+  width: 50%;
+  height: 75%;
+  object-fit: contain;
+}
+
+.product h3,.wcu h1{
+  font-size: 1.5vw;
   font-family: 'MouldyCheese';
   letter-spacing: 2px;
 }
-.shopnowProd{
+.wcu h1{
+  margin-top: 30px;
+}
+.shopnowProd {
   display: block;
   width: 150px;
   height: 40px;
-  font-size: 15px;
+  font-size: 1.1vw;
   background-color: green;
   color: white;
   font-family: 'Queensides';
   border-style: none;
   border-radius: 5px;
-  margin-bottom: 5px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+footer {
+  margin-top: 20px;
+  text-align: center;
+  position: relative;
+}
 
-}
-footer{
-  margin-top: 50px;
-}
-footer img{
-  width: 100dvw;
-  height: 30dvh;
+footer img {
+  width: 100%;
+  height: 30vh;
   object-fit: cover;
-  margin-bottom: -10px;
 }
-#footerSiteName{
+.footerDesc{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   position: absolute;
-  padding-left: 37.2%;
-  margin-top: 1.9%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+#footerSiteName {
   font-family: 'MouldyCheese';
-  font-size: 14dvb;
+  font-size: 6vw;
   color: white;
   filter: drop-shadow(5px 5px 15px black);
   letter-spacing: 8px;
 }
-.footerInfo{
+
+.footerInfo {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  position: absolute;
-  padding-left: 43.5%;
-  margin-top: 11%;
+  gap: 5px;
 }
-.footerInfo1 , .footerInfo2{
+
+.footerInfo1,
+.footerInfo2 {
   font-family: 'Queensides';
   color: white;
-  font-size: 2dvb;
+  font-size: 1.2vw;
   cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .products,.wcuBox {
+  grid-template-columns: repeat(2,1fr);
+}
+.wcuBox{
+  width: 657px;
+}
+}
+@media (max-width: 768px){
+  .LoginBtn,
+.LogOutBtn{
+  height: 4.5vh;
+}
+.shopnowProd{
+  font-size: 2vw;
+}
+.product h3,.wcu h1{
+  font-size: 3vw;
+  font-family: 'MouldyCheese';
+  letter-spacing: 2px;
+}
+#footerSiteName {
+  font-family: 'MouldyCheese';
+  font-size: 8.5vw;
+  color: white;
+  filter: drop-shadow(5px 5px 15px black);
+  letter-spacing: 8px;
+}
+.footerInfo1,
+.footerInfo2 {
+  font-family: 'Queensides';
+  color: white;
+  font-size: 1.5vw;
+  cursor: pointer;
+}
+.wcuBox,.products{
+  display: grid;
+  grid-template-columns: repeat(1,1fr);
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+  border-bottom: 2px solid black;
+}
+#siteName {
+  font-size: 14vw;
+}
+#siteTag {
+  font-size: 1.4vw;
+}
+.shopnow {
+  width: 14vw;
+  height: 6vh;
+  font-size: 1.5vw
+}
+}
+@media (max-width: 368px){
+  #siteName {
+    font-size: 18vw;
+  }
+  #siteTag {
+    font-size: 2vw;
+  }
+  .shopnow {
+    width: 26vw;
+    height: 6vh;
+    font-size: 3.4vw
+  }
+  .traverse-wrapper{
+    font-size: 3vw
+  }
+  .traverse{
+    gap: 20px;
+  }
+  .LoginBtn,
+  .LogOutBtn{
+    width: 14vw;
+    height: 3.5vh;
+    font-size: 2.7vw;
+    font-weight: bolder;
+  }
+  #aboutus,
+#wcu,
+#product {
+  font-size: 10vw;
+  font-family: 'Queensides';
+  text-decoration: underline;
+  text-underline-offset: 10px;
+  text-decoration-thickness: 3px;
+  text-decoration-color: rgb(125, 106, 0);
+}
+#aboutUsPara {
+  max-width: 1400px;
+  width: 330px;
+  font-size: 3.7vw;
+  border-bottom: 2px solid black;
+  padding-bottom: 30px;
+}
+.shopnowProd{
+  font-size: 4vw;
+}
+.product h3,.wcu h1{
+  font-size: 6vw;
+  font-family: 'MouldyCheese';
+  letter-spacing: 2px;
+}
+.wcuBox{
+  width: 310px;
+}
+#footerSiteName {
+  font-family: 'MouldyCheese';
+  font-size: 16vw;
+  color: white;
+  filter: drop-shadow(5px 5px 15px black);
+  letter-spacing: 8px;
+}
+.footerInfo1,
+.footerInfo2 {
+  font-family: 'Queensides';
+  color: white;
+  font-size: 2.5vw;
+  cursor: pointer;
+}
+.footerDesc{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: absolute;
+  top: 34%;
+  left: 54%;
+  transform: translate(-50%,-50%);
+}
+#profileHome{
+  padding-top: 18px;
+  width: 23px;
+}
 }

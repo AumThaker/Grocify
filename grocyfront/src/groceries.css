@@ -160,6 +160,32 @@
     display: flex;
     flex-direction: row;
   }
-  .nav-bi-person-circle{
+  .bi-person-circle{
     padding-top: -30px;
   }
+
+
+@media (max-width: 368px) {
+    .navigator{
+        gap: 10px;
+    }
+    .navigation-wrapper{
+        font-size: 13px;
+    }
+    .nav-login-btn{
+        width: 60px;
+        height: 30px;
+        margin-right: 5px;
+    }
+    .nav-LogOutBtn{
+        width: 60px;
+        height: 25px;
+        font-size: 10px;
+        margin-top: -8px;
+        margin-right: 5px;
+    }
+    .bi-person-circle{
+        width: 25px;
+        margin-top: -10px;
+      }
+}

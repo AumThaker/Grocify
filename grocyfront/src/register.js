@@ -282,7 +282,7 @@ export default function Register() {
               ))}
             </div>
             <button type="submit" id="otpSent">
-              SUBMIT VOTE
+              SUBMIT OTP
             </button>
           </form>
         </div> : <div className="redirect-reg">

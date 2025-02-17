@@ -24,6 +24,7 @@ function LoginContainer() {
       });
       if (!response.ok) {
         const error = await response.json();
+        alert(error.message)
         setError(error.message);
         return;
       }
@@ -48,8 +49,9 @@ function LoginContainer() {
     </div>
   ) : (
     <div className="login-container">
+      <img src="navImage.jpg" alt="loginImage"></img>
       <div className="login-form">
-        <h1>Login Now !!</h1>
+        <h1>Login Now</h1>
         <form onSubmit={LoginBackend}>
           <div className="form">
             <label htmlFor="userOremail">Email Id</label>
@@ -59,13 +61,9 @@ function LoginContainer() {
             <label htmlFor="login-password">Password</label>
             <input type="password" id="login-password" name="password"></input>
           </div>
-          <span id="no-acc">Don't have a Grocify Account ? <Link to={"/register"}>Register Now</Link> , <Link to={"/"}>Home</Link></span>
+          <span id="no-acc">Don't have a Grocify Account ? <Link to={"/register"} style={{color:"white"}}>Register Now</Link> , <Link to={"/"} style={{color:"white"}}>Home</Link></span>
           <button type="submit">Log In</button>
-          <span style={{ color: "red" }}>{error}</span>
         </form>
-      </div>
-      <div className="login-image">
-        <img src="loginRegPFP.jpg" alt="login-image"></img>
       </div>
     </div>
   );

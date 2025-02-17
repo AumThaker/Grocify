@@ -35,8 +35,8 @@ function Nav() {
   }
   return (
     <>
-      <img src="navImage.jpg" alt="navImage" id="imageNav"></img>
       <nav>
+      <img src="navImage.jpg" alt="navImage" id="imageNav"></img>
         <div className="descNav">
           <span id="siteName">Grocify</span>
           <span id="siteTag">Fresh, Green, and Plastic-Free Deliveries</span>
@@ -90,6 +90,7 @@ function Nav() {
                   height="30"
                   fill="currentColor"
                   className="bi bi-person-circle"
+                  id="profileHome"
                   viewBox="0 0 16 16"
                 >
                   <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
@@ -136,7 +137,7 @@ function Dashboard() {
         </p>
         <span id="product">Products</span>
         <div className="products">
-          <div className="veg">
+          <div className="product">
             <h3>Vegetables</h3>
             <img src="vegetables.webp" alt="Fresh Vegetables" />
             <motion.div className="shopnowProd-wrapper">
@@ -153,7 +154,7 @@ function Dashboard() {
               </Link>
             </motion.div>
           </div>
-          <div className="fruit">
+          <div className="product">
             <h3>Fruits</h3>
             <img src="fruits.png" alt="Fresh Fruits" />
             <motion.div className="shopnowProd-wrapper">
@@ -170,7 +171,7 @@ function Dashboard() {
               </Link>
             </motion.div>
           </div>
-          <div className="dairy">
+          <div className="product">
             <h3>Dairy & Bakery</h3>
             <img src="dairy.png" alt="Dairy Products" />
             <motion.div className="shopnowProd-wrapper">
@@ -187,7 +188,7 @@ function Dashboard() {
               </Link>
             </motion.div>
           </div>
-          <div className="grain">
+          <div className="product">
             <h3>Grains & Staples</h3>
             <img src="grains.png" alt="Grains and Staples" />
             <motion.div className="shopnowProd-wrapper">
@@ -207,19 +208,19 @@ function Dashboard() {
         </div>
         <span id="wcu">Why Choose us ?</span>
         <div className="wcuBox">
-          <div className="fastDel">
+          <div className="wcu">
             <img src="delTruck.png" alt="delTruck"></img>
             <h1>Fast Delivery !</h1>
           </div>
-          <div className="quaAss">
+          <div className="wcu">
             <img src="quaAss.png" alt="quaAss"></img>
             <h1>Quality Assurance</h1>
           </div>
-          <div className="secPay">
+          <div className="wcu">
             <img src="secPay.png" alt="secPay"></img>
             <h1>Secure Payment</h1>
           </div>
-          <div className="bestPri">
+          <div className="wcu">
             <img src="besPri.png" alt="bestPri"></img>
             <h1>Best Prices</h1>
           </div>
@@ -231,20 +232,22 @@ function Dashboard() {
 function Footer() {
   return (
     <footer>
-      <h1 id="footerSiteName">Grocify</h1>
-      <div className="footerInfo">
-        <div className="footerInfo1">
-          <span>Terms & Conditions</span>
-          <span> | </span>
-          <span>Privacy Policy</span>
-        </div>
-        <div className="footerInfo2">
-          <span>Refund/Cancel Policy</span>
-          <span> | </span>
-          <span>Contact Us</span>
+      <img src="navImage.jpg" alt="footerImage"></img>
+      <div className="footerDesc">
+        <span id="footerSiteName">Grocify</span>
+        <div className="footerInfo">
+          <div className="footerInfo1">
+            <span>Terms & Conditions</span>
+            <span> | </span>
+            <span>Privacy Policy</span>
+          </div>
+          <div className="footerInfo2">
+            <span>Refund/Cancel Policy</span>
+            <span> | </span>
+            <span>Contact Us</span>
+          </div>
         </div>
       </div>
-      <img src="navImage.jpg" alt="footerImage"></img>
     </footer>
   );
 }

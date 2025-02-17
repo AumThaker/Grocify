@@ -190,10 +190,9 @@ const registerOtpSent = async (req, res) => {
 const register = async (req, res) => {
   const { user } = req.body;
   if (!user) return res.status(404).json({ message: "USER DATA NOT FOUND" });
-  console.log(user);
-  // const createdUser = await User.create(user)
-  // if(!createdUser) return res.status(400).json({message:"ACCOUNT NOT CREATED"})
-  // return res.status(200).json({message:"ACCOUNT CREATED",user:createdUser})
+  const createdUser = await User.create(user)
+  if(!createdUser) return res.status(400).json({message:"ACCOUNT NOT CREATED"})
+  return res.status(200).json({message:"ACCOUNT CREATED",user:createdUser})
 };
 
 export { registerUser, loginUser, logoutUser, registerOtpSent, register };
