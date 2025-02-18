@@ -14,8 +14,7 @@ const corsOption = {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie', 'Accept']
 }
-app.use(cors(corsOption));
-app.options("*", cors(corsOptions));
+app.options("*", cors(corsOption));
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "https://grocify-now.vercel.app"); // Allow frontend
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
