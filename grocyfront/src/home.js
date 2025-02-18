@@ -23,7 +23,7 @@ function Nav() {
     }
   }, [loginStat]);
   async function logout() {
-    const response = await fetch("http://localhost:3000/user/logoutUser", {
+    const response = await fetch(`${process.env.DeployedSite+"/user/logoutUser" || "http://localhost:3000/user/logoutUser"}`, {
       method: "POST",
       credentials: "include",
     });

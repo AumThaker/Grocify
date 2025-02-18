@@ -16,7 +16,7 @@ export default function Cart() {
     }
   }, [loginStat]);
   async function logout() {
-    const response = await fetch("http://localhost:3000/user/logoutUser", {
+    const response = await fetch(`${process.env.DeployedSite+"/user/logoutUser" ||"http://localhost:3000/user/logoutUser"}`, {
       method: "POST",
       credentials: "include",
     });
@@ -111,7 +111,7 @@ function CartItems({ loginStat }) {
   useEffect(() => {
     if (cart.length === 0)
       (async function cartItems() {
-        const response = await fetch("http://localhost:3000/cart/cartItems", {
+        const response = await fetch(`${process.env.DeployedSite+"/cart/cartItems" ||"http://localhost:3000/cart/cartItems"}`, {
           method: "POST",
           credentials: "include",
         });
@@ -139,7 +139,7 @@ function CartItems({ loginStat }) {
       value = e.target.value;
     }
     const response = await fetch(
-      `http://localhost:3000/cart/changeQuantity?productId=${cart[id][0]._id}&quantity=${value}`,
+      `${process.env.DeployedSite+`/cart/changeQuantity?productId=${cart[id][0]._id}&quantity=${value}` || `http://localhost:3000/cart/changeQuantity?productId=${cart[id][0]._id}&quantity=${value}`}`,
       {
         method: "POST",
         credentials: "include",
@@ -181,7 +181,7 @@ function CartItems({ loginStat }) {
         return;
       } else {
         const response = await fetch(
-          "http://localhost:3000/orders/createOrderSingleItem",
+          `${process.env.DeployedSite+"/orders/createOrderSingleItem" ||"http://localhost:3000/orders/createOrderSingleItem"}`,
           {
             method: "POST",
             headers: {
@@ -256,7 +256,7 @@ function CartItems({ loginStat }) {
         deliveryCharge: orderData.orderDetails.deliveryCharges,
         estimatedDeliveryTime: orderData.orderDetails.estimatedDeliveryTime,
       };
-      const response = await fetch("http://localhost:3000/orders/addToOrder", {
+      const response = await fetch(`${process.env.DeployedSite+"/orders/addToOrder" ||"http://localhost:3000/orders/addToOrder"}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -283,7 +283,7 @@ function CartItems({ loginStat }) {
   async function removeFromCart(id) {
     try {
       const response = await fetch(
-        `http://localhost:3000/cart/removeFromCart?productId=${cart[id][0]._id}`,
+        `${process.env.DeployedSite+`/cart/removeFromCart?productId=${cart[id][0]._id}` || `http://localhost:3000/cart/removeFromCart?productId=${cart[id][0]._id}`}`,
         {
           method: "POST",
           credentials: "include",
@@ -325,7 +325,7 @@ function CartItems({ loginStat }) {
         else {
           try {
             const body = cart.map((item,id)=>{return {productId:item[0]._id,productName:item[0].name,price:item[0].price,productImage:item[0].imageUrl,productQuantity:item[1]} })
-            const response = await fetch("http://localhost:3000/orders/createOrderAllItems",{
+            const response = await fetch(`${process.env.DeployedSite+"/orders/createOrderAllItems" ||"http://localhost:3000/orders/createOrderAllItems"}`,{
               method:"POST",
               headers:{
                 "Content-Type":"application/json"

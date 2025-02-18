@@ -15,7 +15,7 @@ export default function BuyWindow() {
     }
   }, [loginStat]);
   async function logout() {
-    const response = await fetch("http://localhost:3000/user/logoutUser", {
+    const response = await fetch(`${process.env.DeployedSite+"/user/logoutUser" || "http://localhost:3000/user/logoutUser"}`, {
       method: "POST",
       credentials: "include",
     });
@@ -102,7 +102,7 @@ function OrderBody({loginStat}) {
   let [orderDetails, setOrderDetails] = useState(null);
   useEffect(() => {
     (async function fetchOrder() {
-      const response = await fetch("http://localhost:3000/orders/fetchOrders", {
+      const response = await fetch(`${process.env.DeployedSite+"/orders/fetchOrders" || "http://localhost:3000/orders/fetchOrders"}`, {
         method: "POST",
         credentials: "include",
       });

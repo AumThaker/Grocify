@@ -16,7 +16,7 @@ export default function Groceries() {
     }
   }, [loginStat]);
   async function logout(){
-    const response = await fetch("http://localhost:3000/user/logoutUser",{
+    const response = await fetch(`${process.env.DeployedSite+"/user/logoutUser" ||"http://localhost:3000/user/logoutUser"}`,{
       method:"POST",
       credentials:"include"
     })
@@ -100,7 +100,7 @@ function Vegetables({ loginStat }) {
   useEffect(() => {
     (async function () {
       try {
-        const response = await fetch("http://localhost:3000/api/grocyVegInfo", {
+        const response = await fetch(`${process.env.DeployedSite+"/api/grocyVegInfo" ||"http://localhost:3000/api/grocyVegInfo"}`, {
           method: "POST",
         })
           .then((res) => res.json())
@@ -125,7 +125,7 @@ function Vegetables({ loginStat }) {
     if(loginStat){
       setNotify(false)
       try {
-        const response = await fetch(`http://localhost:3000/cart/addToCart?productId=${itemId}`,{
+        const response = await fetch(`${process.env.DeployedSite+`/cart/addToCart?productId=${itemId}` ||`http://localhost:3000/cart/addToCart?productId=${itemId}`}`,{
           method:"POST",
           headers:{
             "Content-Type":"application/json"
