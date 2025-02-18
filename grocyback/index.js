@@ -15,18 +15,6 @@ const corsOption = {
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie', 'Accept']
 }
 app.options("*", cors(corsOption));
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://grocify-now.vercel.app"); // Allow frontend
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Cookie, Accept");
-    res.header("Access-Control-Allow-Credentials", "true");
-  
-    if (req.method === "OPTIONS") {
-      return res.sendStatus(200); // Preflight request should end here
-    }
-  
-    next();
-  });
 import userRoutes from './src/routes/userroute.js'
 app.use("/user",userRoutes);
 import apiRoutes from './src/routes/grocyapiroute.js'
