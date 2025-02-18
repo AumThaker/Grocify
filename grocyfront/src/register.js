@@ -45,7 +45,7 @@ export default function Register() {
     let formData = new FormData(form);
     let body = Object.fromEntries(formData);
     try {
-      const response = await fetch(`${process.env.DeployedSite+"/user/registerUser" ||" http://localhost:3000/user/registerUser"}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL+"/user/registerUser" ||" http://localhost:3000/user/registerUser"}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export default function Register() {
       let body = userData;
       try {
         const response = await fetch(
-          `${process.env.DeployedSite+"/user/registerOtpCreate" || "http://localhost:3000/user/registerOtpCreate"}`,
+          `${process.env.REACT_APP_BACKEND_URL+"/user/registerOtpCreate" || "http://localhost:3000/user/registerOtpCreate"}`,
           {
             method: "POST",
             headers: {
@@ -117,7 +117,7 @@ export default function Register() {
     }
     if (otp.toString() === otpEntered) {
       try {
-        const response = await fetch(`${process.env.DeployedSite+"/user/register" || "http://localhost:3000/user/register"}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL+"/user/register" || "http://localhost:3000/user/register"}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
