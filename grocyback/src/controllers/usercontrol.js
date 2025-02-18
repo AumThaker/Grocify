@@ -92,6 +92,8 @@ const loginUser = async (req, res) => {
     const options = {
       httpsOnly: true,
       secure: true,
+      sameSite: 'none',
+      maxAge: 24 * 60 * 60 * 1000 
     };
     return res
       .status(200)
