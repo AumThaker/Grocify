@@ -9,7 +9,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const corsOption = {
-    origin:['http://localhost:3001','https://grocify-now.vercel.app/login'],
+    origin:['http://localhost:3001','https://grocify-now.vercel.app/'],
     credentials:true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie', 'Accept']
