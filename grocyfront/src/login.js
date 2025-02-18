@@ -14,7 +14,8 @@ function LoginContainer() {
       let form = e.target;
       let formData = new FormData(form);
       let formObject = Object.fromEntries(formData.entries());
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL+"/user/loginUser" || "http://localhost:3000/user/loginUser"}`, {
+      const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+      const response = await fetch(`${API_BASE_URL+"/user/loginUser"}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
