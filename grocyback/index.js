@@ -14,7 +14,7 @@ const corsOption = {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie', 'Accept']
 }
-app.options("*", cors(corsOption));
+app.use(cors(corsOption))
 import userRoutes from './src/routes/userroute.js'
 app.use("/user",userRoutes);
 import apiRoutes from './src/routes/grocyapiroute.js'
