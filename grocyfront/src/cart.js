@@ -6,24 +6,26 @@ import "./cart.css";
 export default function Cart() {
   let [loginStat, setLoginStat] = useState(false);
   useEffect(() => {
-    (async function loginCheck(){
-      const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
-    const response = await fetch(`${API_BASE_URL}/user/checkLoginToken`, {
-      method: "POST",
-      credentials: "include",
-    });
-    if(!response.ok){
-      setLoginStat(false)
-      return;
-    }
-    if(response.ok){
-      setLoginStat(true)
-      return;
-    }
-    })()
+    (async function loginCheck() {
+      const API_BASE_URL =
+        process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+      const response = await fetch(`${API_BASE_URL}/user/checkLoginToken`, {
+        method: "POST",
+        credentials: "include",
+      });
+      if (!response.ok) {
+        setLoginStat(false);
+        return;
+      }
+      if (response.ok) {
+        setLoginStat(true);
+        return;
+      }
+    })();
   }, [loginStat]);
   async function logout() {
-    const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+    const API_BASE_URL =
+      process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
     const response = await fetch(`${API_BASE_URL}/user/logoutUser`, {
       method: "POST",
       credentials: "include",
@@ -119,7 +121,8 @@ function CartItems({ loginStat }) {
   useEffect(() => {
     if (cart.length === 0)
       (async function cartItems() {
-        const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+        const API_BASE_URL =
+          process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
         const response = await fetch(`${API_BASE_URL}/cart/cartItems`, {
           method: "POST",
           credentials: "include",
@@ -147,7 +150,9 @@ function CartItems({ loginStat }) {
       e.target.value = stock;
       value = e.target.value;
     }
-    const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+    console.log(cart[id[0]._id])
+    const API_BASE_URL =
+      process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
     const response = await fetch(
       `${API_BASE_URL}/cart/changeQuantity?productId=${cart[id][0]._id}&quantity=${value}`,
       {
@@ -190,7 +195,8 @@ function CartItems({ loginStat }) {
         );
         return;
       } else {
-        const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+        const API_BASE_URL =
+          process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
         const response = await fetch(
           `${API_BASE_URL}/orders/createOrderSingleItem`,
           {
@@ -252,13 +258,21 @@ function CartItems({ loginStat }) {
       }
     };
     await handlePayment();
-    const order = cart.map((item,id)=>{return {productId:item[0]._id,productName:item[0].name,price:item[0].price,productImage:item[0].imageUrl,productQuantity:item[1]} })
-    setOrderedItems(order)
+    const order = cart.map((item, id) => {
+      return {
+        productId: item[0]._id,
+        productName: item[0].name,
+        price: item[0].price,
+        productImage: item[0].imageUrl,
+        productQuantity: item[1],
+      };
+    });
+    setOrderedItems(order);
   }
   useEffect(() => {
     if (!paymentId || !orderedItems) return;
     (async function updateOrder() {
-      console.log(paymentDate)
+      console.log(paymentDate);
       let body = {
         orderedItems: orderedItems,
         paymentId: paymentId,
@@ -268,7 +282,8 @@ function CartItems({ loginStat }) {
         deliveryCharge: orderData.orderDetails.deliveryCharges,
         estimatedDeliveryTime: orderData.orderDetails.estimatedDeliveryTime,
       };
-      const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+      const API_BASE_URL =
+        process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
       const response = await fetch(`${API_BASE_URL}/orders/addToOrder`, {
         method: "POST",
         headers: {
@@ -295,7 +310,8 @@ function CartItems({ loginStat }) {
   }, [paymentId, orderedItems]);
   async function removeFromCart(id) {
     try {
-      const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+      const API_BASE_URL =
+        process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
       const response = await fetch(
         `${API_BASE_URL}/cart/removeFromCart?productId=${cart[id][0]._id}`,
         {
@@ -338,21 +354,33 @@ function CartItems({ loginStat }) {
         if (cart.length === 0) alert("No Items In Cart");
         else {
           try {
-            const body = cart.map((item,id)=>{return {productId:item[0]._id,productName:item[0].name,price:item[0].price,productImage:item[0].imageUrl,productQuantity:item[1]} })
-            const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
-            const response = await fetch(`${API_BASE_URL}/orders/createOrderAllItems`,{
-              method:"POST",
-              headers:{
-                "Content-Type":"application/json"
-              },
-              body:JSON.stringify(body),
-              credentials:"include"
-            })
-            if(!response.ok){
-              const error = await response.json()
-              alert(error.message)
+            const body = cart.map((item, id) => {
+              return {
+                productId: item[0]._id,
+                productName: item[0].name,
+                price: item[0].price,
+                productImage: item[0].imageUrl,
+                productQuantity: item[1],
+              };
+            });
+            const API_BASE_URL =
+              process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+            const response = await fetch(
+              `${API_BASE_URL}/orders/createOrderAllItems`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body),
+                credentials: "include",
+              }
+            );
+            if (!response.ok) {
+              const error = await response.json();
+              alert(error.message);
             }
-            if(response.ok){
+            if (response.ok) {
               let result = response.json().then((data) => {
                 setOrderData(data);
                 console.log(data);
@@ -360,7 +388,7 @@ function CartItems({ loginStat }) {
               });
             }
           } catch (error) {
-            console.log(error)
+            console.log(error);
           }
         }
       }
@@ -404,15 +432,27 @@ function CartItems({ loginStat }) {
       }
     };
     await handlePayment();
-    const order = cart.map((item,id)=>{return {productId:item[0]._id,productName:item[0].name,price:item[0].price,productImage:item[0].imageUrl,productQuantity:item[1]} })
-    setOrderedItems(order)
+    const order = cart.map((item, id) => {
+      return {
+        productId: item[0]._id,
+        productName: item[0].name,
+        price: item[0].price,
+        productImage: item[0].imageUrl,
+        productQuantity: item[1],
+      };
+    });
+    setOrderedItems(order);
   }
   return loginStat ? (
     <div className="cart">
       <div className="top-section-cart">
         <h1>CART ITEMS</h1>
         <motion.div className="BuyAll-wrapper">
-          <motion.button whileTap={{ scale: 0.85 }} className="BuyAll" onClick={buyAll}>
+          <motion.button
+            whileTap={{ scale: 0.85 }}
+            className="BuyAll"
+            onClick={buyAll}
+          >
             Buy All
           </motion.button>
         </motion.div>
