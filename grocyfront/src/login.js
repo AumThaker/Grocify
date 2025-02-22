@@ -16,7 +16,7 @@ function LoginContainer() {
       let formObject = Object.fromEntries(formData.entries());
       const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
       console.log(API_BASE_URL)
-      const response = await fetch(`${API_BASE_URL}/user/loginUser`, {
+      const response = await fetch(`https://grocify-wnao.onrender.com/user/loginUser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
