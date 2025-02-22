@@ -196,5 +196,9 @@ const register = async (req, res) => {
   if(!createdUser) return res.status(400).json({message:"ACCOUNT NOT CREATED"})
   return res.status(200).json({message:"ACCOUNT CREATED",user:createdUser})
 };
-
-export { registerUser, loginUser, logoutUser, registerOtpSent, register };
+const checkLoginToken = async (req,res) => {
+  const loginToken = req.cookies?.loginToken
+  if(!loginToken) return res.status(401).json({loginstatus:false,message:"No Token"})
+  return res.status(200).json({loginstatus:true,message:"Token available"})
+}
+export { registerUser, loginUser, logoutUser, registerOtpSent, register, checkLoginToken };

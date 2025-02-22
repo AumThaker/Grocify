@@ -5,14 +5,21 @@ import "./buyWindow.css";
 export default function BuyWindow() {
   let [loginStat, setLoginStat] = useState(false);
   useEffect(() => {
-    const cookies = document.cookie.split("; ");
-    for (const cookie of cookies) {
-      let [cookieName, cookieValue] = cookie.split("=");
-      if (cookieName === "loginToken" && cookieValue) {
-        setLoginStat(true);
-        break; // No need to continue checking after finding the token
-      }
+    (async function loginCheck(){
+      const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+    const response = await fetch(`${API_BASE_URL}/user/checkLoginToken`, {
+      method: "POST",
+      credentials: "include",
+    });
+    if(!response.ok){
+      setLoginStat(false)
+      return;
     }
+    if(response.ok){
+      setLoginStat(true)
+      return;
+    }
+    })()
   }, [loginStat]);
   async function logout() {
     const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
