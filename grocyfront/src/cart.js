@@ -149,7 +149,7 @@ function CartItems({ loginStat }) {
     }
     const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
     const response = await fetch(
-      `${API_BASE_URL}/cart/changeQuantity?productId="${cart[id][0]._id}&quantity=${value}`,
+      `${API_BASE_URL}/cart/changeQuantity?productId=${cart[id][0]._id}&quantity=${value}`,
       {
         method: "POST",
         credentials: "include",
