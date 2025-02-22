@@ -21,11 +21,9 @@ function Nav() {
     });
     if(!response.ok){
       setLoginStat(false)
-      return;
     }
     if(response.ok){
       setLoginStat(true)
-      return;
     }
     })()
   }, [loginStat]);
@@ -38,6 +36,7 @@ function Nav() {
     if (!response.ok) {
       let error = await response.json();
       console.log(error.message);
+      setLoginStat(true)
     }
     if (response.ok) setLoginStat(false);
   }
