@@ -106,6 +106,7 @@ const addToOrder = async (req, res) => {
     deliveryCharge,
     estimatedDeliveryTime,
   } = req.body;
+  console.log(paymentDate)
   console.log(orderedItems)
   if (!orderedItems)
     return res.status(404).json({ message: "NO ITEMS ORDERED" });

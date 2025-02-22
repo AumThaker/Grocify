@@ -258,6 +258,7 @@ function CartItems({ loginStat }) {
   useEffect(() => {
     if (!paymentId || !orderedItems) return;
     (async function updateOrder() {
+      console.log(paymentDate)
       let body = {
         orderedItems: orderedItems,
         paymentId: paymentId,
