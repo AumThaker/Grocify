@@ -15,6 +15,7 @@ app.use(cors(corsOption))
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.options('*', cors(corsOption));
 import userRoutes from './src/routes/userroute.js'
 app.use("/user",userRoutes);
 import apiRoutes from './src/routes/grocyapiroute.js'
