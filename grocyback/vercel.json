@@ -10,10 +10,12 @@
     {
       "src": "/(.*)",
       "dest": "/index.js",
-      "methods": ["OPTIONS", "POST","GET"],
+      "methods": ["OPTIONS", "POST", "GET"],
       "headers": {
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization"
+        "Access-Control-Allow-Origin": "https://grocify-now.vercel.app",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, Cookie",
+        "Access-Control-Allow-Credentials": "true"
       }
     }
   ]
