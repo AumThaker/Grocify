@@ -39,6 +39,7 @@ const cartItems = async (req, res) => {
 
 const changeQuantity = async (req, res) => {
   const { productId, quantity } = req.query;
+  console.log(productId)
   if (!productId)
     return res.status(400).json({ message: "Cannot change quantity" });
   const item = await GrocyAPI.findById(productId);
@@ -46,7 +47,7 @@ const changeQuantity = async (req, res) => {
     return res.status(400).json({ message: "Out Of Stock" });
   const user = await User.findById(req.user._id);
   if (!user) return res.status(400).json({ message: "User not found" });
-  const cartItemToUpdate = user.cart.find(item => item.productId === productId);
+  const cartItemToUpdate = user.cart.find(item => item.productId.toString() === productId);
     if (cartItemToUpdate) {
       cartItemToUpdate.quantity = quantity;
     } else {
