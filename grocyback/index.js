@@ -26,6 +26,7 @@ import orderRoutes from "./src/routes/orderroute.js"
 import { addWarehouse } from './src/controllers/warehousecontrol.js'
 app.use("/orders",orderRoutes);
 app.use("/addWarehouse",addWarehouse)
+app.get("/",()=>{console.log("Backend Ready")})
 const startServer = async () => {
     try {
         await connectDB();

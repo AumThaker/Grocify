@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import User from "../models/usermodel.js";
-import GrocyAPI from "/aum/Internship/grocyback/src/models/grocymodel.js";
+import GrocyAPI from "../models/grocymodel.js";
 import razorpay from "razorpay";
 import Orders from "../models/orders.js";
 

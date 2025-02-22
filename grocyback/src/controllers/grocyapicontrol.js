@@ -1,4 +1,4 @@
-import GrocyAPI from "/aum/Internship/grocyback/src/models/grocymodel.js";
+import GrocyAPI from "../models/grocymodel.js";
 const GrocyAdd = async (req,res) => {
     try {
         const {name,category,price,unit,stock,description,imageUrl} = req.body;

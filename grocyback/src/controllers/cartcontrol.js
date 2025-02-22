@@ -1,5 +1,5 @@
 import User from "../models/usermodel.js";
-import GrocyAPI from "/aum/Internship/grocyback/src/models/grocymodel.js";
+import GrocyAPI from "../models/grocymodel.js";
 const addToCart = async (req, res) => {
   const { productId } = req.query;
   if (!productId)
