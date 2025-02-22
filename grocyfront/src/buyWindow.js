@@ -148,7 +148,7 @@ function OrderBody({loginStat}) {
               <div className="order-section-title">Payment Details</div>
               <span><strong>Order ID:</strong> {order.payment.orderId}</span>
               <span><strong>Transaction ID:</strong> {order.payment.transactionId}</span>
-              <span><strong>Date:</strong> {order.payment.paymentDate}</span>
+              <span><strong>Date:</strong> {order.payment.paymentDate.toLocaleString()}</span>
               <span><strong>Amount:</strong> ₹{order.payment.paymentAmount / 100}</span>
               <span><strong>Delivery Charge:</strong> ₹{order.payment.deliveryCharge}</span>
             </div>
