@@ -16,7 +16,8 @@ export default function Cart() {
     }
   }, [loginStat]);
   async function logout() {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL+"/user/logoutUser" ||"http://localhost:3000/user/logoutUser"}`, {
+    const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+    const response = await fetch(`${API_BASE_URL}/user/logoutUser`, {
       method: "POST",
       credentials: "include",
     });
@@ -111,7 +112,8 @@ function CartItems({ loginStat }) {
   useEffect(() => {
     if (cart.length === 0)
       (async function cartItems() {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL+"/cart/cartItems" ||"http://localhost:3000/cart/cartItems"}`, {
+        const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+        const response = await fetch(`${API_BASE_URL}/cart/cartItems`, {
           method: "POST",
           credentials: "include",
         });
@@ -138,8 +140,9 @@ function CartItems({ loginStat }) {
       e.target.value = stock;
       value = e.target.value;
     }
+    const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
     const response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL+`/cart/changeQuantity?productId=${cart[id][0]._id}&quantity=${value}` || `http://localhost:3000/cart/changeQuantity?productId=${cart[id][0]._id}&quantity=${value}`}`,
+      `${API_BASE_URL}/cart/changeQuantity?productId="${cart[id][0]._id}&quantity=${value}`,
       {
         method: "POST",
         credentials: "include",
@@ -180,8 +183,9 @@ function CartItems({ loginStat }) {
         );
         return;
       } else {
+        const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL+"/orders/createOrderSingleItem" ||"http://localhost:3000/orders/createOrderSingleItem"}`,
+          `${API_BASE_URL}/orders/createOrderSingleItem`,
           {
             method: "POST",
             headers: {
@@ -256,7 +260,8 @@ function CartItems({ loginStat }) {
         deliveryCharge: orderData.orderDetails.deliveryCharges,
         estimatedDeliveryTime: orderData.orderDetails.estimatedDeliveryTime,
       };
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL+"/orders/addToOrder" ||"http://localhost:3000/orders/addToOrder"}`, {
+      const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+      const response = await fetch(`${API_BASE_URL}/orders/addToOrder`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -282,8 +287,9 @@ function CartItems({ loginStat }) {
   }, [paymentId, orderedItems]);
   async function removeFromCart(id) {
     try {
+      const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL+`/cart/removeFromCart?productId=${cart[id][0]._id}` || `http://localhost:3000/cart/removeFromCart?productId=${cart[id][0]._id}`}`,
+        `${API_BASE_URL}/cart/removeFromCart?productId=${cart[id][0]._id}`,
         {
           method: "POST",
           credentials: "include",
@@ -325,7 +331,8 @@ function CartItems({ loginStat }) {
         else {
           try {
             const body = cart.map((item,id)=>{return {productId:item[0]._id,productName:item[0].name,price:item[0].price,productImage:item[0].imageUrl,productQuantity:item[1]} })
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL+"/orders/createOrderAllItems" ||"http://localhost:3000/orders/createOrderAllItems"}`,{
+            const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+            const response = await fetch(`${API_BASE_URL}/orders/createOrderAllItems`,{
               method:"POST",
               headers:{
                 "Content-Type":"application/json"

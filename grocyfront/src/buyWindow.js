@@ -15,7 +15,8 @@ export default function BuyWindow() {
     }
   }, [loginStat]);
   async function logout() {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL+"/user/logoutUser" || "http://localhost:3000/user/logoutUser"}`, {
+    const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+    const response = await fetch(`${API_BASE_URL}/user/logoutUser`, {
       method: "POST",
       credentials: "include",
     });
@@ -102,7 +103,8 @@ function OrderBody({loginStat}) {
   let [orderDetails, setOrderDetails] = useState(null);
   useEffect(() => {
     (async function fetchOrder() {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL+"/orders/fetchOrders" || "http://localhost:3000/orders/fetchOrders"}`, {
+      const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+      const response = await fetch(`${API_BASE_URL}/orders/fetchOrders`, {
         method: "POST",
         credentials: "include",
       });

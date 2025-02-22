@@ -23,7 +23,8 @@ function Nav() {
     }
   }, [loginStat]);
   async function logout() {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL+"/user/logoutUser" || "http://localhost:3000/user/logoutUser"}`, {
+    const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+    const response = await fetch(`${API_BASE_URL}/user/logoutUser`, {
       method: "POST",
       credentials: "include",
     });

@@ -16,7 +16,8 @@ export default function Groceries() {
     }
   }, [loginStat]);
   async function logout(){
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL+"/user/logoutUser" ||"http://localhost:3000/user/logoutUser"}`,{
+    const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+    const response = await fetch(`${API_BASE_URL}/user/logoutUser`,{
       method:"POST",
       credentials:"include"
     })
@@ -100,7 +101,8 @@ function Vegetables({ loginStat }) {
   useEffect(() => {
     (async function () {
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL+"/api/grocyVegInfo" ||"http://localhost:3000/api/grocyVegInfo"}`, {
+        const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+        const response = await fetch(`${API_BASE_URL}/api/grocyVegInfo`, {
           method: "POST",
         })
           .then((res) => res.json())
@@ -125,7 +127,8 @@ function Vegetables({ loginStat }) {
     if(loginStat){
       setNotify(false)
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL+`/cart/addToCart?productId=${itemId}` ||`http://localhost:3000/cart/addToCart?productId=${itemId}`}`,{
+        const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+        const response = await fetch(`${API_BASE_URL}/cart/addToCart?productId=${itemId}`,{
           method:"POST",
           headers:{
             "Content-Type":"application/json"

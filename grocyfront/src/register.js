@@ -45,7 +45,8 @@ export default function Register() {
     let formData = new FormData(form);
     let body = Object.fromEntries(formData);
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL+"/user/registerUser" ||" http://localhost:3000/user/registerUser"}`, {
+      const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+      const response = await fetch(`${API_BASE_URL}/user/registerUser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,8 +73,9 @@ export default function Register() {
     (async function otpFetch() {
       let body = userData;
       try {
+        const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL+"/user/registerOtpCreate" || "http://localhost:3000/user/registerOtpCreate"}`,
+          `${API_BASE_URL}/user/registerOtpCreate`,
           {
             method: "POST",
             headers: {
@@ -117,7 +119,8 @@ export default function Register() {
     }
     if (otp.toString() === otpEntered) {
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL+"/user/register" || "http://localhost:3000/user/register"}`, {
+        const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+        const response = await fetch(`${API_BASE_URL}/user/register`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
