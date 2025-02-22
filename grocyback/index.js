@@ -3,11 +3,8 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import connectDB from "./src/db/db.js"
-const app = express();
 dotenv.config({path:"./.env"});
-app.use(cookieParser());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const app = express();
 const corsOption = {
     origin:['http://localhost:3001','https://grocify-now.vercel.app'],
     credentials:true,
@@ -15,6 +12,9 @@ const corsOption = {
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie', 'Accept']
 }
 app.use(cors(corsOption))
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 import userRoutes from './src/routes/userroute.js'
 app.use("/user",userRoutes);
 import apiRoutes from './src/routes/grocyapiroute.js'
