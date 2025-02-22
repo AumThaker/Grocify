@@ -46,7 +46,7 @@ const changeQuantity = async (req, res) => {
     return res.status(400).json({ message: "Out Of Stock" });
   const user = await User.findById(req.user._id);
   if (!user) return res.status(400).json({ message: "User not found" });
-  const cartItemToUpdate = user.cart.find(item => item.productId.toString() === productId);
+  const cartItemToUpdate = user.cart.find(item => item.productId === productId);
     if (cartItemToUpdate) {
       cartItemToUpdate.quantity = quantity;
     } else {
