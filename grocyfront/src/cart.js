@@ -403,7 +403,7 @@ function CartItems({ loginStat }) {
         order_id: orderData.newOrder.id, // Order ID from backend
         handler: function (response) {
           setPaymentId(response.razorpay_payment_id);
-          setPaymentDate(new Date().toLocaleString());
+          setPaymentDate(new Date());
           setPaymentAmount(orderData.newOrder.amount); // Use correct value
         },
         prefill: {
