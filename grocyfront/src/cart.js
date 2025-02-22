@@ -150,7 +150,6 @@ function CartItems({ loginStat }) {
       e.target.value = stock;
       value = e.target.value;
     }
-    console.log(cart[id][0]._id)
     const API_BASE_URL =
       process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
     const response = await fetch(
@@ -230,7 +229,7 @@ function CartItems({ loginStat }) {
         order_id: orderData.newOrder.id, // Order ID from backend
         handler: function (response) {
           setPaymentId(response.razorpay_payment_id);
-          setPaymentDate(new Date().toLocaleString());
+          setPaymentDate(new Date());
           setPaymentAmount(orderData.newOrder.amount); // Use correct value
         },
         prefill: {
