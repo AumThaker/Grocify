@@ -150,7 +150,7 @@ function CartItems({ loginStat }) {
       e.target.value = stock;
       value = e.target.value;
     }
-    console.log(cart[id[0]._id])
+    console.log(cart[id][0]._id)
     const API_BASE_URL =
       process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
     const response = await fetch(
