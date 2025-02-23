@@ -6,6 +6,7 @@ import Login from './login';
 import Cart from './cart';
 import BuyWindow from './buyWindow';
 import Register from './register';
+import ProfilePage from './profile';
 
 function App() {
   return <BrowserRouter>
@@ -16,6 +17,7 @@ function App() {
     <Route path='/register' element={<Register />}></Route>
     <Route path='/cart' element={<Cart />}></Route>
     <Route path='/order' element={<BuyWindow />}></Route>
+    <Route path='/profile' element={<ProfilePage />}></Route>
   </Routes>
   </BrowserRouter>
 }

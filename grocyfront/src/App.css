@@ -84,6 +84,9 @@ body{
   flex-direction: row;
   margin-top: -20px;
 }
+.bi-person-circle{
+  padding-top: 15px;
+}
 .LoginBtn,
 .LogOutBtn {
   display: block;

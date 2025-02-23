@@ -1,0 +1,168 @@
+/* Background Image */
+#profileBack {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    filter: blur(5px) brightness(0.7);
+    z-index: -1;
+  }
+  
+  /* Profile Container */
+  .profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Profile Card */
+  .profile-card {
+    max-width: 400px;
+    width: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    color: white;
+    text-align: center;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  
+  /* Welcome Title */
+  .profile-card h1 {
+    font-size: 36px;
+    margin-bottom: 40px;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .profile-card h1 span {
+    color: #ff4b2b;
+  }
+  
+  /* Profile Details */
+  .profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  
+  /* Detail Items */
+  .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+  }
+  
+  .detail-item:hover {
+    transform: scale(1.05);
+  }
+  
+  #profile-ItemLabel{
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  #profile-item-details{
+    font-size: 18px;
+    opacity: 0.9;
+  }
+  
+  /* Profile Buttons */
+  .profile-btns {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .profile-btns button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  /* Change Button */
+  .change-btn {
+    background: linear-gradient(45deg, #4caf50, #2e7d32);
+    color: white;
+  }
+  
+  .change-btn:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(45deg, #66bb6a, #43a047);
+  }
+  
+  /* Home Button */
+  .home-btn {
+    background: linear-gradient(45deg, #ff4b2b, #ff416c);
+    color: white;
+  }
+  
+  .home-btn:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(45deg, #ff6f61, #ff4b2b);
+  }
+  
+  /* Fade In Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .profile-card {
+      padding: 30px;
+    }
+  
+    .profile-card h1 {
+      font-size: 28px;
+    }
+  
+    .detail-item {
+      flex-direction: column;
+      gap: 8px;
+    }
+  
+    .profile-btns {
+      flex-direction: column;
+    }
+  }
+  @media (max-width: 368px){
+    .profile-card{
+        width: 60%;
+        margin-top: 350px;
+    }
+      .profile-card h1 {
+        font-size: 28px;
+      }
+    
+      .detail-item {
+        gap: 1px;
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 10px;
+      }
+    
+      .profile-btns {
+        flex-direction: column;
+      }
+  }
