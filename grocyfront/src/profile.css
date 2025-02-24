@@ -114,6 +114,23 @@
     transform: translateY(-3px);
     background: linear-gradient(45deg, #ff6f61, #ff4b2b);
   }
+  .profile-loader{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: white;
+    animation: fadeInVerify 0.5s ease-in-out;
+  }
   
   /* Fade In Animation */
   @keyframes fadeIn {
