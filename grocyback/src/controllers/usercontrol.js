@@ -300,6 +300,228 @@ const verifyEmail = async (req, res) => {
   };
   return res.status(200).cookie("loginToken", loginToken, options).json({ message: "Email Successfully Verified" });
 };
+const changePassword = async (req, res) => {
+  try {
+    const { newPassword, verification } = req.body;
+    if (!newPassword)
+      return res.status(400).json({ message: "New Password Not Found" });
+    console.log(newPassword);
+    let user = await User.findById(req.user._id);
+    if (!user) return res.status(400).json({ message: "User Not Found" });
+    const API_BASE_URL = process.env.FRONTEND_URL || "http://localhost:3001";
+    if (!verification) {
+      const verificationLink = `${API_BASE_URL}/verifyEmail?email=${user.email}&newPassword=${newPassword}&user=${user.loginToken}`;
+      let emailBody = `
+    <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f4f4f4;">
+        <div style="max-width: 500px; background: white; padding: 20px; border-radius: 10px; margin: auto;">
+            <h2 style="color: #007bff;">Verify Your Email</h2>
+            <p>Click the button below to complete your verification process.</p>
+            <a href="${verificationLink}" style="text-decoration: none;">
+                <button style="
+                    background-color: #007bff;
+                    color: white;
+                    padding: 10px 20px;
+                    font-size: 18px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    margin-top: 20px;">
+                    Verify Email
+                </button>
+            </a>
+            <p>If you didn't request this, you can safely ignore this email.</p>
+        </div>
+    </div>
+  `;
+      const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+          user: process.env.USER_EMAIL,
+          pass: process.env.USER_EMAIL_PASS,
+        },
+      });
+      await transporter.verify(function (error, success) {
+        if (error) {
+          console.log("Error:", error);
+        } else {
+          console.log("SMTP server is ready to send emails!");
+        }
+      });
+      let emailTemplate = emailBody;
+      var mailOptions = {
+        from: process.env.USER_EMAIL,
+        to: user.email,
+        subject: "Grocify Password Change Verification",
+        html: emailTemplate,
+      };
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          return res.status(404).json("Email not verified");
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
+      return res.status(200).json({stat:"MailSent",message:"Email sent to user's mail id"})
+    }
+    user.password = newPassword;
+    await user.save()
+    return res.status(200).json({stat:"UserUpdated",message:"Password Successfully Updated"})
+  }catch (error) {
+    console.error("Error in changePassword:", error);
+    return res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
+const changeAddress = async (req, res) => {
+  try {
+    const { housenumber , street , city , state , pincode, verification } = req.body;
+    if (!(housenumber || street || city || state || pincode))
+      return res.status(400).json({ message: "Incomplete Address" });
+    let user = await User.findById(req.user._id);
+    if (!user) return res.status(400).json({ message: "User Not Found" });
+    const API_BASE_URL = process.env.FRONTEND_URL || "http://localhost:3001";
+    if (!verification) {
+      const verificationLink = `${API_BASE_URL}/verifyEmail?email=${user.email}&hn=${housenumber}&str=${street}$ct=${city}&st=${state}&pc=${pincode}&user=${user.loginToken}`;
+      let emailBody = `
+    <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f4f4f4;">
+        <div style="max-width: 500px; background: white; padding: 20px; border-radius: 10px; margin: auto;">
+            <h2 style="color: #007bff;">Verify Your Email</h2>
+            <p>Click the button below to complete your verification process.</p>
+            <a href="${verificationLink}" style="text-decoration: none;">
+                <button style="
+                    background-color: #007bff;
+                    color: white;
+                    padding: 10px 20px;
+                    font-size: 18px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    margin-top: 20px;">
+                    Verify Email
+                </button>
+            </a>
+            <p>If you didn't request this, you can safely ignore this email.</p>
+        </div>
+    </div>
+  `;
+      const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+          user: process.env.USER_EMAIL,
+          pass: process.env.USER_EMAIL_PASS,
+        },
+      });
+      await transporter.verify(function (error, success) {
+        if (error) {
+          console.log("Error:", error);
+        } else {
+          console.log("SMTP server is ready to send emails!");
+        }
+      });
+      let emailTemplate = emailBody;
+      var mailOptions = {
+        from: process.env.USER_EMAIL,
+        to: user.email,
+        subject: "Grocify Address Change Verification",
+        html: emailTemplate,
+      };
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          return res.status(404).json("Email not verified");
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
+      return res.status(200).json({stat:"MailSent",message:"Email sent to user's mail id"})
+    }
+    user.address.housenumber = housenumber;
+    user.address.street = street;
+    user.address.city = city;
+    user.address.state = state;
+    user.address.pincode = pincode;
+    await user.save()
+    return res.status(200).json({stat:"UserUpdated",message:"Address Successfully Updated"})
+  }catch (error) {
+    console.error("Error in changeAddress:", error);
+    return res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
+const changePhone = async (req, res) => {
+  try {
+    const { newPhone, verification } = req.body;
+    if (!newPhone)
+      return res.status(400).json({ message: "New Phone Number Not Found" });
+    console.log(newPhone);
+    let user = await User.findById(req.user._id);
+    if (!user) return res.status(400).json({ message: "User Not Found" });
+    const API_BASE_URL = process.env.FRONTEND_URL || "http://localhost:3001";
+    if (!verification) {
+      const verificationLink = `${API_BASE_URL}/verifyEmail?email=${user.email}&newPhone=${newPhone}&user=${user.loginToken}`;
+      let emailBody = `
+    <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f4f4f4;">
+        <div style="max-width: 500px; background: white; padding: 20px; border-radius: 10px; margin: auto;">
+            <h2 style="color: #007bff;">Verify Your Email</h2>
+            <p>Click the button below to complete your verification process.</p>
+            <a href="${verificationLink}" style="text-decoration: none;">
+                <button style="
+                    background-color: #007bff;
+                    color: white;
+                    padding: 10px 20px;
+                    font-size: 18px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    margin-top: 20px;">
+                    Verify Email
+                </button>
+            </a>
+            <p>If you didn't request this, you can safely ignore this email.</p>
+        </div>
+    </div>
+  `;
+      const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+          user: process.env.USER_EMAIL,
+          pass: process.env.USER_EMAIL_PASS,
+        },
+      });
+      await transporter.verify(function (error, success) {
+        if (error) {
+          console.log("Error:", error);
+        } else {
+          console.log("SMTP server is ready to send emails!");
+        }
+      });
+      let emailTemplate = emailBody;
+      var mailOptions = {
+        from: process.env.USER_EMAIL,
+        to: user.email,
+        subject: "Grocify Mobile Number Change Verification",
+        html: emailTemplate,
+      };
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          return res.status(404).json("Email not verified");
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
+      return res.status(200).json({stat:"MailSent",message:"Email sent to user's mail id"})
+    }
+    user.phone = newPhone;
+    await user.save()
+    return res.status(200).json({stat:"UserUpdated",message:"Mobile Number Successfully Updated"})
+  }catch (error) {
+    console.error("Error in changePhone:", error);
+    return res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
 export {
   registerUser,
   loginUser,
@@ -309,4 +531,7 @@ export {
   checkLoginToken,
   changeUsername,
   verifyEmail,
+  changePassword,
+  changeAddress,
+  changePhone
 };

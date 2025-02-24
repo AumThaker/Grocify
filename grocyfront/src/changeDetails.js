@@ -37,6 +37,10 @@ export default function ChangeDetails() {
     let formData = new FormData(form);
     let formobject = Object.fromEntries(formData);
     formobject.verification = emailVerified;
+    if(formobject.newUsername===""){
+      alert("Enter new username")
+      return;
+    }
     const API_BASE_URL =
       process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
     const response = await fetch(`${API_BASE_URL}/user/changeUsername`, {

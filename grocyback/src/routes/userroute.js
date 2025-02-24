@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { changeUsername, checkLoginToken, loginUser, logoutUser, register, registerOtpSent, registerUser, verifyEmail } from '../controllers/usercontrol.js';
+import { changeAddress, changePassword, changePhone, changeUsername, checkLoginToken, loginUser, logoutUser, register, registerOtpSent, registerUser, verifyEmail } from '../controllers/usercontrol.js';
 import verifyToken from '../middlewares/token.js';
 const router = Router();
 router.route("/registerUser").post(registerUser)
@@ -9,5 +9,8 @@ router.route("/logoutUser").post(verifyToken,logoutUser)
 router.route("/registerOtpCreate").post(registerOtpSent)
 router.route("/checkLoginToken").post(checkLoginToken)
 router.route("/changeUsername").post(verifyToken,changeUsername)
+router.route("/changePassword").post(verifyToken,changePassword)
+router.route("/changeAddress").post(verifyToken,changeAddress)
+router.route("/changePhone").post(verifyToken,changePhone)
 router.route("/verifyEmail").post(verifyEmail)
 export default router
