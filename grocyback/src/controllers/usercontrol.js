@@ -312,10 +312,13 @@ const verifyEmail = async (req, res) => {
 };
 const changePassword = async (req, res) => {
   try {
-    const { newPassword, verification } = req.body;
+    const { newPassword , newConPassword, verification } = req.body;
     if (!newPassword)
       return res.status(400).json({ message: "New Password Not Found" });
     console.log(newPassword);
+    if(newPassword!==newConPassword){
+        return res.status(200).json({message:"Both Passwords Are Not Same"})
+    }
     const passRegex =
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
     if (!passRegex.test(newPassword)) {

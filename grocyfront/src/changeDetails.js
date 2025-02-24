@@ -72,6 +72,81 @@ export default function ChangeDetails() {
       alert(result.message);
     }
   }
+  async function changePassword(e) {
+    e.preventDefault();
+    let form = e.target;
+    let formData = new FormData(form);
+    let formobject = Object.fromEntries(formData);
+    formobject.verification = emailVerified;
+    const API_BASE_URL =
+      process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+    const response = await fetch(`${API_BASE_URL}/user/changePassword`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formobject),
+      credentials: "include",
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      alert(error.message);
+    }
+    if (response.ok) {
+      const result = await response.json();
+      alert(result.message);
+    }
+  }
+  async function changeAddress(e) {
+    e.preventDefault();
+    let form = e.target;
+    let formData = new FormData(form);
+    let formobject = Object.fromEntries(formData);
+    formobject.verification = emailVerified;
+    const API_BASE_URL =
+      process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+    const response = await fetch(`${API_BASE_URL}/user/changeAddress`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formobject),
+      credentials: "include",
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      alert(error.message);
+    }
+    if (response.ok) {
+      const result = await response.json();
+      alert(result.message);
+    }
+  }
+  async function changePhone(e) {
+    e.preventDefault();
+    let form = e.target;
+    let formData = new FormData(form);
+    let formobject = Object.fromEntries(formData);
+    formobject.verification = emailVerified;
+    const API_BASE_URL =
+      process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+    const response = await fetch(`${API_BASE_URL}/user/changePhone`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formobject),
+      credentials: "include",
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      alert(error.message);
+    }
+    if (response.ok) {
+      const result = await response.json();
+      alert(result.message);
+    }
+  }
   return (
     <>
       {loginStat ? (
@@ -122,32 +197,38 @@ export default function ChangeDetails() {
               )}
 
               {btnActive === 1 && (
+                <form onSubmit={(e)=>{changePassword(e)}}>
                 <div className="change-section">
-                  <label htmlFor="oldPassword">Enter old password</label>
-                  <input
-                    type="password"
-                    id="oldPassword"
-                    placeholder="Old password"
-                  />
-
                   <label htmlFor="newPassword">Enter new password</label>
                   <input
                     type="password"
                     id="newPassword"
+                    name="newPassword"
                     placeholder="New password"
                   />
 
-                  <button className="submit-btn">Submit</button>
+                  <label htmlFor="newconPassword">Enter new confirm password</label>
+                  <input
+                    type="password"
+                    id="newConPassword"
+                    name="newConPassword"
+                    placeholder="New Confirm password"
+                  />
+
+                  <button className="submit-btn" type="submit">Submit</button>
                 </div>
+                </form>
               )}
               {btnActive === 2 && (
                 <div className="change-section">
+                  <form onSubmit={(e)=>changeAddress(e)}>
                   <div className="address-grid">
                     <div>
                       <label htmlFor="change-house-number">House Number</label>
                       <input
                         type="text"
                         id="change-house-number"
+                        name="housenumber"
                         placeholder="Enter house number"
                       />
                     </div>
@@ -157,6 +238,7 @@ export default function ChangeDetails() {
                       <input
                         type="text"
                         id="change-street"
+                        name="street"
                         placeholder="Enter street name"
                       />
                     </div>
@@ -166,6 +248,7 @@ export default function ChangeDetails() {
                       <input
                         type="text"
                         id="change-city"
+                        name="city"
                         placeholder="Enter city"
                       />
                     </div>
@@ -175,6 +258,7 @@ export default function ChangeDetails() {
                       <input
                         type="text"
                         id="change-state"
+                        name="state"
                         placeholder="Enter state"
                       />
                     </div>
@@ -184,25 +268,30 @@ export default function ChangeDetails() {
                       <input
                         type="number"
                         id="change-pincode"
+                        name="pincode"
                         placeholder="Enter pincode"
                         onInput={(e)=>{handlePincodeValue(e)}}
                       />
                     </div>
                   </div>
 
-                  <button className="submit-btn">Submit</button>
+                  <button className="submit-btn" type="submit">Submit</button>
+                  </form>
                 </div>
               )}
               {btnActive === 3 && (
                 <div className="change-section">
+                  <form onSubmit={(e)=>changePhone(e)}>
                   <label htmlFor="changePhone">Enter phone number</label>
                   <input
                     type="number"
                     id="changePhone"
+                    name="newPhone"
                     placeholder="New phone number"
                     onInput={(e)=>handlePhoneNumberValue(e)}
                   />
-                  <button className="submit-btn">Submit</button>
+                  <button className="submit-btn" type="submit">Submit</button>
+                  </form>
                 </div>
               )}
             </div>
@@ -221,7 +310,9 @@ export default function ChangeDetails() {
           </Link>
         </div>
       )}
+      <Link to={"/"}>
       <button id="BackToHome">Home</button>
+      </Link>
     </>
   );
 }
