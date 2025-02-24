@@ -25,10 +25,16 @@ const calculateDistance = async (req, res, next) => {
 &units=metric
 &key=${process.env.GOOGLE_MAP_API_KEY}
 `);
-  let result = await response.json();
-  if(!response.ok){
-    return res.status(404).json({message:"Address Not Fetchable"})
-  }
+if (!response.ok) {
+  return res.status(500).json({ message: "Error fetching distance data from Google API" });
+}
+
+const result = await response.json();
+
+if (result.status !== "OK" || result.rows[0].elements[0].status !== "OK") {
+  return res.status(404).json({ message: "Address Not Fetchable", error: result });
+}
+
   let distance = result.rows[0].elements[0].distance.value/1000
   let duration = result.rows[0].elements[0].duration.text
   let deliveryCharges;
