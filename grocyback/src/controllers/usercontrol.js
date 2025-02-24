@@ -220,8 +220,9 @@ const changeUsername = async (req, res) => {
     console.log(newUsername);
     let user = await User.findById(req.user._id);
     if (!user) return res.status(400).json({ message: "User Not Found" });
+    const API_BASE_URL = process.env.FRONTEND_URL || "http://localhost:3001";
     if (!verification) {
-      const verificationLink = `http://localhost:3001/verifyEmail?email=${user.email}&newUsername=${newUsername}&user=${user.loginToken}`;
+      const verificationLink = `${API_BASE_URL}/verifyEmail?email=${user.email}&newUsername=${newUsername}&user=${user.loginToken}`;
       let emailBody = `
     <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f4f4f4;">
         <div style="max-width: 500px; background: white; padding: 20px; border-radius: 10px; margin: auto;">
