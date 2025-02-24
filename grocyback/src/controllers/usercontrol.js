@@ -409,7 +409,7 @@ const changeAddress = async (req, res) => {
     if (!user) return res.status(400).json({ message: "User Not Found" });
     const API_BASE_URL = process.env.FRONTEND_URL || "http://localhost:3001";
     if (!verification) {
-      const verificationLink = `${API_BASE_URL}/verifyEmail?email=${user.email}&hn=${housenumber}&str=${street}$ct=${city}&st=${state}&pc=${pincode}&user=${user.loginToken}`;
+      const verificationLink = `${API_BASE_URL}/verifyEmail?email=${user.email}&hn=${housenumber}&str=${street}&ct=${city}&st=${state}&pc=${pincode}&user=${user.loginToken}`;
       let emailBody = `
     <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f4f4f4;">
         <div style="max-width: 500px; background: white; padding: 20px; border-radius: 10px; margin: auto;">
@@ -580,10 +580,11 @@ const fetchUserDetails = async (req, res) => {
     })
   );
   const orderSpends = orders.reduce((total, amount) => total + amount, 0);
+  const address = Object.values(user.address).filter(Boolean).join(" ");
   let userDetails = {
     name:user.name,
     email:user.email,
-    address:user.address,
+    address:address,
     phone:user.phone,
     spent:orderSpends
   }
