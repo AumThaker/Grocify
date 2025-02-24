@@ -1,8 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import './profile.css';
 
 const ProfilePage = () => {
+  let [loginStat, setLoginStat] = useState(false);
+  useEffect(() => {
+      (async function loginCheck() {
+        const API_BASE_URL =
+          process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+        const response = await fetch(`${API_BASE_URL}/user/checkLoginToken`, {
+          method: "POST",
+          credentials: "include",
+        });
+        if (!response.ok) {
+          setLoginStat(false);
+        }
+        if (response.ok) {
+          setLoginStat(true);
+        }
+      })();
+    }, [loginStat]);
   const [user, setUser] = useState({
     username: "john_doe",
     email: "john@example.com",
@@ -13,7 +30,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      <div className="profile-container">
+    {loginStat?<div className="profile-container">
         <img src="navImage.jpg" alt="profileBack" id="profileBack" />
         <div className="profile-card">
           <h1>Welcome to <span>Grocify</span></h1>
@@ -44,7 +61,17 @@ const ProfilePage = () => {
             <Link to={"/"}><button className="home-btn">Back To Home</button></Link>
           </div>
         </div>
-      </div>
+      </div>:<div className="not-logged-in">
+          <img
+            src="navImage.jpg"
+            alt="changeDetailsBack"
+            id="changeDetailsBack"
+          />
+          <span>User Not Logged In</span>
+          <Link to={"/login"}>
+            <button id="loginPage">Log In Now</button>
+          </Link>
+        </div>}
     </>
   );
 };
