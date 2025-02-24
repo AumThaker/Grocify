@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom'
 import './profile.css';
 
 const ProfilePage = () => {
@@ -39,8 +40,8 @@ const ProfilePage = () => {
             </div>
           </div>
           <div className="profile-btns">
-            <button className="change-btn">Change Details</button>
-            <button className="home-btn">Back To Home</button>
+            <Link to={"/changeDetails"}><button className="change-btn">Change Details</button></Link>
+            <Link to={"/"}><button className="home-btn">Back To Home</button></Link>
           </div>
         </div>
       </div>

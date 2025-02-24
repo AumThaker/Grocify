@@ -1,0 +1,229 @@
+/* Background Image */
+#changeDetailsBack {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    filter: blur(5px) brightness(0.7);
+    z-index: -1;
+  }
+  
+  /* Main Container */
+  .change-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  
+  /* Card Layout */
+  .change-card {
+    width: 90%;
+    max-width: 650px; /* Reduced for better fit */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    color: white;
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+    max-height: 85vh; /* Ensures card fits screen */
+    overflow-y: auto; /* Enables scroll if content exceeds */
+  }
+  
+  /* Title */
+  .change-card h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    font-family: "Poppins", sans-serif;
+  }
+  .change-card h1 span{
+    color:#ff4b2b;
+  }
+  
+  /* Options Section */
+  .change-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .change-options button {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transition: background 0.3s ease;
+    min-width: 120px;
+  }
+  
+  .change-options button:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+  
+  /* Active Button */
+  .active-btn {
+    background: linear-gradient(45deg, #4caf50, #2e7d32) !important;
+  }
+  
+  /* Form Section */
+  .change-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Input Labels */
+  .change-section label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-size: 20px;
+  }
+  
+  /* Input Fields */
+  .change-section input {
+    width: 97%;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+  }
+  
+  /* Address Form - Compact Grid Layout */
+  .address-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px; /* Reduced gap */
+  }
+  
+  /* Full-width Pincode */
+  .full-width {
+    grid-column: span 2;
+  }
+  
+  /* Submit Button */
+  .submit-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    background: linear-gradient(45deg, #ff4b2b, #ff416c);
+    color: white;
+    transition: background 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background: linear-gradient(45deg, #ff6f61, #ff4b2b);
+  }
+  
+  .not-logged-in {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* "User Not Logged In" Text */
+  .not-logged-in span {
+    font-size: 32px;
+    font-weight: 600;
+    font-family: "Queensides";
+    margin-bottom: 20px;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  
+  /* Login Page Button */
+  #loginPage {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    background: linear-gradient(45deg, #4caf50, #2e7d32);
+    color: white;
+    transition: transform 0.3s, background 0.3s;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  #loginPage:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(45deg, #66bb6a, #43a047);
+  }
+  
+  /* Back To Home Button */
+  #BackToHome {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: linear-gradient(45deg, #ff4b2b, #ff416c);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  
+  #BackToHome:hover {
+    background: linear-gradient(45deg, #ff6f61, #ff4b2b);
+    transform: translateY(-3px);
+  }
+
+  /* Fade In Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    .change-card {
+      padding: 20px;
+    }
+  
+    .address-grid {
+      grid-template-columns: 1fr; /* Single column for small screens */
+    }
+  
+    .change-options button {
+      font-size: 12px;
+      padding: 6px 8px;
+    }
+  }
+  @media (max-width: 368px){
+    .address-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 10px; /* Reduced gap */
+      }
+  }

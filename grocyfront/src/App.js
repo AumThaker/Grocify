@@ -7,6 +7,8 @@ import Cart from './cart';
 import BuyWindow from './buyWindow';
 import Register from './register';
 import ProfilePage from './profile';
+import ChangeDetails from './changeDetails';
+import VerifyEmail from './verifyEmail';
 
 function App() {
   return <BrowserRouter>
@@ -18,6 +20,8 @@ function App() {
     <Route path='/cart' element={<Cart />}></Route>
     <Route path='/order' element={<BuyWindow />}></Route>
     <Route path='/profile' element={<ProfilePage />}></Route>
+    <Route path='/changeDetails' element={<ChangeDetails/>}></Route>
+    <Route path='/verifyEmail' element={<VerifyEmail/>}></Route>
   </Routes>
   </BrowserRouter>
 }
