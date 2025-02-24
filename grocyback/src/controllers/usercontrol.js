@@ -1,3 +1,4 @@
+import Orders from "../models/orders.js";
 import User from "../models/usermodel.js";
 import nodemailer from "nodemailer";
 
@@ -275,18 +276,24 @@ const changeUsername = async (req, res) => {
           console.log("Email sent: " + info.response);
         }
       });
-      return res.status(200).json({stat:"MailSent",message:"Email sent to user's mail id"})
+      return res
+        .status(200)
+        .json({ stat: "MailSent", message: "Email sent to user's mail id" });
     }
     user.name = newUsername;
-    await user.save()
-    return res.status(200).json({stat:"UserUpdated",message:"Username Successfully Updated"})
-  }catch (error) {
+    await user.save();
+    return res
+      .status(200)
+      .json({ stat: "UserUpdated", message: "Username Successfully Updated" });
+  } catch (error) {
     console.error("Error in changeUsername:", error);
-    return res.status(500).json({ message: "Internal Server Error", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
   }
 };
 const verifyEmail = async (req, res) => {
-  const { email , loginToken} = req.query;
+  const { email, loginToken } = req.query;
   if (!email) return res.status(404).json({ message: "Email Id Not Correct" });
   let user = await User.findOne({ email });
   if (!user) {
@@ -298,7 +305,10 @@ const verifyEmail = async (req, res) => {
     sameSite: "None",
     maxAge: 24 * 60 * 60 * 1000,
   };
-  return res.status(200).cookie("loginToken", loginToken, options).json({ message: "Email Successfully Verified" });
+  return res
+    .status(200)
+    .cookie("loginToken", loginToken, options)
+    .json({ message: "Email Successfully Verified" });
 };
 const changePassword = async (req, res) => {
   try {
@@ -306,6 +316,16 @@ const changePassword = async (req, res) => {
     if (!newPassword)
       return res.status(400).json({ message: "New Password Not Found" });
     console.log(newPassword);
+    const passRegex =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    if (!passRegex.test(newPassword)) {
+      return res
+        .status(400)
+        .json({
+          message:
+            "Password Should Contain 1 Uppercase , 1 Lowercase , 1 Digit , 1 Symbol",
+        });
+    }
     let user = await User.findById(req.user._id);
     if (!user) return res.status(400).json({ message: "User Not Found" });
     const API_BASE_URL = process.env.FRONTEND_URL || "http://localhost:3001";
@@ -363,19 +383,26 @@ const changePassword = async (req, res) => {
           console.log("Email sent: " + info.response);
         }
       });
-      return res.status(200).json({stat:"MailSent",message:"Email sent to user's mail id"})
+      return res
+        .status(200)
+        .json({ stat: "MailSent", message: "Email sent to user's mail id" });
     }
     user.password = newPassword;
-    await user.save()
-    return res.status(200).json({stat:"UserUpdated",message:"Password Successfully Updated"})
-  }catch (error) {
+    await user.save();
+    return res
+      .status(200)
+      .json({ stat: "UserUpdated", message: "Password Successfully Updated" });
+  } catch (error) {
     console.error("Error in changePassword:", error);
-    return res.status(500).json({ message: "Internal Server Error", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
   }
 };
 const changeAddress = async (req, res) => {
   try {
-    const { housenumber , street , city , state , pincode, verification } = req.body;
+    const { housenumber, street, city, state, pincode, verification } =
+      req.body;
     if (!(housenumber || street || city || state || pincode))
       return res.status(400).json({ message: "Incomplete Address" });
     let user = await User.findById(req.user._id);
@@ -435,18 +462,24 @@ const changeAddress = async (req, res) => {
           console.log("Email sent: " + info.response);
         }
       });
-      return res.status(200).json({stat:"MailSent",message:"Email sent to user's mail id"})
+      return res
+        .status(200)
+        .json({ stat: "MailSent", message: "Email sent to user's mail id" });
     }
     user.address.housenumber = housenumber;
     user.address.street = street;
     user.address.city = city;
     user.address.state = state;
     user.address.pincode = pincode;
-    await user.save()
-    return res.status(200).json({stat:"UserUpdated",message:"Address Successfully Updated"})
-  }catch (error) {
+    await user.save();
+    return res
+      .status(200)
+      .json({ stat: "UserUpdated", message: "Address Successfully Updated" });
+  } catch (error) {
     console.error("Error in changeAddress:", error);
-    return res.status(500).json({ message: "Internal Server Error", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
   }
 };
 const changePhone = async (req, res) => {
@@ -455,6 +488,12 @@ const changePhone = async (req, res) => {
     if (!newPhone)
       return res.status(400).json({ message: "New Phone Number Not Found" });
     console.log(newPhone);
+    const phoneRegex = /^((\+91?)|\+)?[7-9][0-9]{9}$/;
+    if (!phoneRegex.test(newPhone)) {
+      return res
+        .status(400)
+        .json({ message: "Phone number should be of 10 digits" });
+    }
     let user = await User.findById(req.user._id);
     if (!user) return res.status(400).json({ message: "User Not Found" });
     const API_BASE_URL = process.env.FRONTEND_URL || "http://localhost:3001";
@@ -512,15 +551,43 @@ const changePhone = async (req, res) => {
           console.log("Email sent: " + info.response);
         }
       });
-      return res.status(200).json({stat:"MailSent",message:"Email sent to user's mail id"})
+      return res
+        .status(200)
+        .json({ stat: "MailSent", message: "Email sent to user's mail id" });
     }
     user.phone = newPhone;
-    await user.save()
-    return res.status(200).json({stat:"UserUpdated",message:"Mobile Number Successfully Updated"})
-  }catch (error) {
+    await user.save();
+    return res
+      .status(200)
+      .json({
+        stat: "UserUpdated",
+        message: "Mobile Number Successfully Updated",
+      });
+  } catch (error) {
     console.error("Error in changePhone:", error);
-    return res.status(500).json({ message: "Internal Server Error", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
   }
+};
+const fetchUserDetails = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (!user) return res.status(400).json({ message: "USER NOT FOUND" });
+  const orders = await Promise.all(
+    user.orders.map(async (order) => {
+      const ord = await Orders.findById(order.orderId);
+      return ord ? ord.payment.paymentAmount / 100 : 0; 
+    })
+  );
+  const orderSpends = orders.reduce((total, amount) => total + amount, 0);
+  let userDetails = {
+    name:user.name,
+    email:user.email,
+    address:user.address,
+    phone:user.phone,
+    spent:orderSpends
+  }
+  return res.status(200).json({message:"FETCHED SUCCESSFULLY",user:userDetails})
 };
 export {
   registerUser,
@@ -533,5 +600,6 @@ export {
   verifyEmail,
   changePassword,
   changeAddress,
-  changePhone
+  changePhone,
+  fetchUserDetails
 };

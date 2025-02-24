@@ -31,6 +31,18 @@ export default function ChangeDetails() {
   function buttonActive(index) {
     setBtnActive(index);
   }
+  function handlePhoneNumberValue(e) {
+    let value = e.target.value;
+    if (value.length > 10) {
+      e.target.value = value.slice(0, 10);
+    }
+  }
+  function handlePincodeValue(e) {
+    let value = e.target.value;
+    if (value.length > 6) {
+      e.target.value = value.slice(0, 6);
+    }
+  }
   async function changeUsername(e) {
     e.preventDefault();
     let form = e.target;
@@ -173,6 +185,7 @@ export default function ChangeDetails() {
                         type="number"
                         id="change-pincode"
                         placeholder="Enter pincode"
+                        onInput={(e)=>{handlePincodeValue(e)}}
                       />
                     </div>
                   </div>
@@ -187,6 +200,7 @@ export default function ChangeDetails() {
                     type="number"
                     id="changePhone"
                     placeholder="New phone number"
+                    onInput={(e)=>handlePhoneNumberValue(e)}
                   />
                   <button className="submit-btn">Submit</button>
                 </div>

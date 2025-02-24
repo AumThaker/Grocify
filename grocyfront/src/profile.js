@@ -4,6 +4,7 @@ import './profile.css';
 
 const ProfilePage = () => {
   let [loginStat, setLoginStat] = useState(false);
+  const [user, setUser] = useState(null)
   useEffect(() => {
       (async function loginCheck() {
         const API_BASE_URL =
@@ -20,24 +21,36 @@ const ProfilePage = () => {
         }
       })();
     }, [loginStat]);
-  const [user, setUser] = useState({
-    username: "john_doe",
-    email: "john@example.com",
-    phone: "123-456-7890",
-    address: "123 Main St, Ahmedabad",
-    totalSpends: "₹12,000",
-  });
-
+    useEffect(()=>{
+      try{
+      (async function fetchUserDetails(){
+        const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+        const response = await fetch(`${API_BASE_URL}/user/fetchUserDetails`, {
+          method: "POST",
+          credentials: "include",
+        });
+        if (!response.ok) {
+          const error = await response.json();
+          alert(error.message)
+          return;
+        }
+        const result = await response.json();
+        setUser(result.user);
+        console.log("Response from server:", result);
+    })()} catch (error) {
+        alert(error)
+      }
+    },[])
   return (
     <>
-    {loginStat?<div className="profile-container">
+    {loginStat?user!==null?<div className="profile-container">
         <img src="navImage.jpg" alt="profileBack" id="profileBack" />
         <div className="profile-card">
           <h1>Welcome to <span>Grocify</span></h1>
           <div className="profile-details">
             <div className="detail-item">
               <label id='profile-ItemLabel'>Username:</label>
-              <p id='profile-item-details'>{user.username}</p>
+              <p id='profile-item-details'>{user.name}</p>
             </div>
             <div className="detail-item">
               <label id='profile-ItemLabel'>Email:</label>
@@ -53,7 +66,7 @@ const ProfilePage = () => {
             </div>
             <div className="detail-item">
               <label id='profile-ItemLabel'>Total Spends:</label>
-              <p id='profile-item-details'>{user.totalSpends}</p>
+              <p id='profile-item-details'>{user.spent}</p>
             </div>
           </div>
           <div className="profile-btns">
@@ -61,7 +74,7 @@ const ProfilePage = () => {
             <Link to={"/"}><button className="home-btn">Back To Home</button></Link>
           </div>
         </div>
-      </div>:<div className="not-logged-in">
+      </div>:null:<div className="not-logged-in">
           <img
             src="navImage.jpg"
             alt="changeDetailsBack"
