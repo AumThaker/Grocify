@@ -74,7 +74,7 @@ const ProfilePage = () => {
             <Link to={"/"}><button className="home-btn">Back To Home</button></Link>
           </div>
         </div>
-      </div>:<div className='profile-loader'><img src="navImage.jpg" alt="changeDetailsBack" id="changeDetailsBack" /><div className="loading-spinner"></div></div>:<div className="not-logged-in">
+      </div>:<div className='profile-loader'><span>Fetching Data : </span><div className="loading-spinner"></div></div>:<div className="not-logged-in">
           <img
             src="navImage.jpg"
             alt="changeDetailsBack"

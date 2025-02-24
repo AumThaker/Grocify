@@ -114,22 +114,30 @@
     transform: translateY(-3px);
     background: linear-gradient(45deg, #ff6f61, #ff4b2b);
   }
-  .profile-loader{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 400px;
-    padding: 40px;
-    border-radius: 20px;
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  .profile-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('../public/navImage.jpg') no-repeat center center/cover;
+    flex-direction: column;
     text-align: center;
+  }
+  
+  .profile-loader span {
+    font-size: 1.5rem;
     color: white;
-    animation: fadeInVerify 0.5s ease-in-out;
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-family: 'Queensides';
+  }
+  .profile-loader .loading-spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3);
+  border-top: 8px solid white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
   }
   
   /* Fade In Animation */
